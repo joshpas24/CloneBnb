@@ -13,10 +13,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Spots'
-        }
+        },
+        onDelete: 'CASCADE'
       },
       url: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
       },
       preview: {
         type: Sequelize.BOOLEAN

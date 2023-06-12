@@ -13,23 +13,29 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Spots'
-        }
+        },
+        onDelete: 'CASCADE',
+        allowNull: false
       },
       userId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users'
-        }
+        },
+        onDelete: 'CASCADE',
+        allowNull: false
       },
       review: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
+        allowNull: false
       },
       stars: {
         type: Sequelize.INTEGER,
         validate: {
           min: 0,
           max: 5
-        }
+        },
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

@@ -30,17 +30,39 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       references: {
         model: 'Users'
-      }
+      },
+      onDelete: 'CASCADE'
     },
-    address: DataTypes.FLOAT,
-    city: DataTypes.FLOAT,
-    state: DataTypes.FLOAT,
-    country: DataTypes.FLOAT,
+    address: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
+    city: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
+    state: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
+    country: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
     lat: DataTypes.DECIMAL,
     lng: DataTypes.DECIMAL,
-    name: DataTypes.FLOAT,
-    description: DataTypes.FLOAT,
-    price: DataTypes.DECIMAL
+    name: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
+    price: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
   }, {
     sequelize,
     modelName: 'Spot',

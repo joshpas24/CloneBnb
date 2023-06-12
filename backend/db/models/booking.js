@@ -20,15 +20,35 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Booking.init({
-    spotId: DataTypes.INTEGER,
+    spotId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Spots'
+      },
+      onDelete: 'CASCADE'
+    },
     userId: {
       type: DataTypes.INTEGER,
       references: {
         model: 'Users'
       },
+      onDelete: 'CASCADE'
     },
-    startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE
+    startDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    endDate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        isAfterStartDate(val) {
+          if (val < this.startDate) {
+            throw new Error('End date must be after start date')
+          }
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Booking',

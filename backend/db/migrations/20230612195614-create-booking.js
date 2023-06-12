@@ -24,10 +24,12 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       startDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       endDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -40,8 +42,19 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
+
+    await queryInterface.addConstraint('Bookings', {
+      fields: ['endDate'],
+      type: 'check',
+      where: {
+        endDate: { [Sequelize.Op.gt]: Sequelize.col('startDate') },
+      },
+      name: 'Bookings_endDate_check'
+    });
+
   },
   async down(queryInterface, Sequelize) {
+    await queryInterface.removeConstraint('Bookings', 'Bookings_endDate_check');
     await queryInterface.dropTable('Bookings');
   }
 };

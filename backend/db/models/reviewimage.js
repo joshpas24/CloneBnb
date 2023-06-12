@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       references: {
         model: 'Reviews'
-      }
+      },
+      onDelete: 'CASCADE'
     },
     url: DataTypes.FLOAT
   }, {

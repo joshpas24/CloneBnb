@@ -27,16 +27,30 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       references: {
         model: 'Spots'
-      }
+      },
+      onDelete: 'CASCADE',
+      allowNull: false
     },
     userId: {
       type: DataTypes.INTEGER,
       references: {
         model: 'Users'
-      }
+      },
+      onDelete: 'CASCADE',
+      allowNull: false
     },
-    review: DataTypes.FLOAT,
-    stars: DataTypes.INTEGER
+    review: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
+    stars: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: 0,
+        max: 5
+      }
+    }
   }, {
     sequelize,
     modelName: 'Review',
