@@ -8,6 +8,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
+    options.tableName = 'Bookings';
     await queryInterface.createTable('Bookings', {
       id: {
         allowNull: false,
@@ -49,6 +50,7 @@ module.exports = {
       }
     }, options);
 
+    options.tableName = 'Bookings';
     await queryInterface.addConstraint('Bookings', {
       fields: ['endDate'],
       type: 'check',
