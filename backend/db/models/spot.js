@@ -34,33 +34,33 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     },
     address: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.TEXT,
       allowNull: false
     },
     city: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.TEXT,
       allowNull: false
     },
     state: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.TEXT,
       allowNull: false
     },
     country: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.TEXT,
       allowNull: false
     },
     lat: DataTypes.DECIMAL,
     lng: DataTypes.DECIMAL,
     name: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.TEXT,
       allowNull: false
     },
     description: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.TEXT,
       allowNull: false
     },
     price: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.DECIMAL,
       allowNull: false
     },
   }, {

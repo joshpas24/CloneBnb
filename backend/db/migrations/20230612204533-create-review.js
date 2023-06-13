@@ -32,7 +32,7 @@ module.exports = {
         allowNull: false
       },
       review: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       stars: {

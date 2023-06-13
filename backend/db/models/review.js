@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     review: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.TEXT,
       allowNull: false
     },
     stars: {
