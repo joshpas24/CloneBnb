@@ -56,11 +56,10 @@ module.exports = {
         endDate: { [Sequelize.Op.gt]: Sequelize.col('startDate') },
       },
       name: 'Bookings_endDate_check'
-    });
+    }, options);
 
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = 'Bookings';
     await queryInterface.removeConstraint('Bookings', 'Bookings_endDate_check');
     await queryInterface.dropTable('Bookings');
   }
