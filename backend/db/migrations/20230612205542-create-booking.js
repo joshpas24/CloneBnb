@@ -50,8 +50,8 @@ module.exports = {
       }
     }, options);
 
-    options.tableName = 'Bookings';
-    await queryInterface.addConstraint('Bookings', {
+    // options.tableName = 'Bookings';
+    await queryInterface.addConstraint(options, {
       fields: ['endDate'],
       type: 'check',
       where: {
@@ -63,7 +63,7 @@ module.exports = {
   },
   async down(queryInterface, Sequelize) {
     options.tableName = 'Bookings';
-    await queryInterface.removeConstraint('Bookings', 'Bookings_endDate_check');
+    await queryInterface.removeConstraint(options, 'Bookings_endDate_check');
     await queryInterface.dropTable('Bookings');
   }
 };
