@@ -226,7 +226,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
 });
 
 //Edit a spot
-router.put('/:id', requireAuth, validateSpot, async (req, res) => {
+router.put('/:id', requireAuth, async (req, res) => {
     const spot = await Spot.findByPk(req.params.id);
 
     if (!spot) {
