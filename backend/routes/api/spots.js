@@ -44,7 +44,9 @@ const validateSpot = [
 
 //Get all spots
 router.get('/', async(req, res) => {
-    const spots = await Spot.findAll();
+    const spots = await Spot.findAll({
+        order: ['id']
+    });
 
     let newSpots = []
 
@@ -94,7 +96,8 @@ router.get('/current', requireAuth, async(req, res) => {
     const spots = await Spot.findAll({
         where: {
             ownerId: req.user.id
-        }
+        },
+        order: ['id']
     });
 
     let newSpots = []
