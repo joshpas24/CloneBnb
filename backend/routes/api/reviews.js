@@ -7,6 +7,17 @@ const { handleValidationErrors } = require('../../utils/validation')
 
 const router = express.Router();
 
+const validateReview = [
+    check('review')
+      .exists({ checkFalsy: true })
+      .withMessage('Review text is required'),
+    check('stars')
+      .exists({ checkFalsy: true })
+      .isInt({min: 1, max: 5})
+      .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
+
 //Get all reviews by current user
 router.get('/current', requireAuth, async(req,res) => {
     const reviews = await Review.findAll({
@@ -73,5 +84,97 @@ router.get('/current', requireAuth, async(req,res) => {
     })
 });
 
+//Add image to Review based on Review id
+router.post('/:id/images', requireAuth, async(req, res) => {
+    const review = await Review.findByPk(req.params.id);
+
+    if (!review) {
+        res.status(404);
+        return res.json({
+            message: "Review couldn't be found"
+        });
+    };
+
+    //Maximum number (10) images per review check
+    const images = await ReviewImage.findAll({
+        where: {
+            reviewId: review.id
+        }
+    });
+
+    if (images.length >= 10) {
+        res.status(403);
+        return res.json({
+            message: "Maximum number of images for this resource was reached"
+        });
+    };
+
+    if (review.userId !== req.user.id) {
+        // const err = new Error('Review must be made by current user');
+        res.status(404);
+        return res.json({
+            message: 'Review must be made by current user'
+        })
+    };
+
+    const { url } = req.body;
+
+    const newImage = await review.createReviewImage({
+        url
+    });
+
+    const result = {
+        id: newImage.id,
+        url: newImage.url
+    };
+
+    res.json(result)
+});
+
+//Edit a review
+router.put('/:id', requireAuth, validateReview, async(req, res) => {
+    const rev = await Review.findByPk(req.params.id);
+
+    if (!rev) {
+        res.status(404);
+        return res.json({
+            message: "Review couldn't be found"
+        });
+    }
+
+    if (rev.userId !== req.user.id) {
+        res.status(404);
+        return res.json({
+            message: 'Review must be made by current user to edit'
+        })
+    };
+
+    const { review, stars } = req.body;
+
+    rev.update({
+        review,
+        stars
+    });
+
+    res.json(rev)
+});
+
+//Delete a review
+router.delete('/:id', requireAuth, async(req, res) => {
+    const review = await Review.findByPk(req.params.id);
+
+    if (!review) {
+        res.status(404);
+        return res.json({
+            message: "Review couldn't be found"
+        });
+    };
+
+    review.destroy();
+
+    res.json({
+        message: "Successfully deleted"
+    })
+})
 
 module.exports = router;
