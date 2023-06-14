@@ -1,7 +1,7 @@
 const express = require('express');
-const { Op } = require('sequelize');
-const { Spot, Review, SpotImage, User, sequelize } = require('../../db/models');
-const {requireAuth} = require('../../utils/auth')
+const { Op, sequelize } = require('sequelize');
+const { Spot, Review, SpotImage, User, ReviewImage } = require('../../db/models');
+const { requireAuth } = require('../../utils/auth')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation')
 
@@ -310,4 +310,46 @@ router.delete('/:id', requireAuth, async (req, res) => {
     })
 });
 
-module.exports = router
+//Get all Reviews by a Spot's id
+router.get('/:id/reviews', async(req, res) => {
+    const spot = await Spot.findByPk(req.params.id);
+
+    if (!spot) {
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found"
+        });
+    };
+
+    const reviews = await Review.findAll({
+        where: {
+            spotId: req.params.id
+        }
+    });
+
+    const newReviews = [];
+
+    for (let review of reviews) {
+        const newReview = review.toJSON();
+
+        const user = await User.findByPk(review.userId);
+
+        const images = await ReviewImage.findAll({
+            where: {
+                reviewId: review.id
+            },
+            attributes: ['id', 'url']
+        });
+
+        newReview.User = user;
+        newReview.ReviewImages = images;
+
+        newReviews.push(newReview)
+    };
+
+    res.json({
+        Reviews: newReviews
+    });
+});
+
+module.exports = router;
