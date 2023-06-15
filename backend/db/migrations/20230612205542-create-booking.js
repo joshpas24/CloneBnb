@@ -31,11 +31,11 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       startDate: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false
       },
       endDate: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false
       },
       createdAt: {
@@ -51,11 +51,11 @@ module.exports = {
     }, options);
 
     options.tableName = 'Bookings';
-    await queryInterface.addConstraint(options, {
+    await queryInterface.addConstraint('Bookings', {
       fields: ['endDate'],
       type: 'check',
       where: {
-        endDate: { [Sequelize.Op.gt]: Sequelize.col('startDate') },
+        endDate: { [Sequelize.Op.gte]: Sequelize.col('startDate') },
       },
       name: 'Bookings_endDate_check'
     }, options);
@@ -63,7 +63,7 @@ module.exports = {
   },
   async down(queryInterface, Sequelize) {
     options.tableName = 'Bookings';
-    await queryInterface.removeConstraint(options, 'Bookings_endDate_check');
+    await queryInterface.removeConstraint('Bookings', 'Bookings_endDate_check');
     await queryInterface.dropTable('Bookings');
   }
 };

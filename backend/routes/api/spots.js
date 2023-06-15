@@ -1,6 +1,6 @@
 const express = require('express');
-const { Op, sequelize } = require('sequelize');
-const { Spot, Review, SpotImage, User, ReviewImage } = require('../../db/models');
+const { Op, Sequelize, ValidationError } = require('sequelize');
+const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation')
@@ -53,10 +53,76 @@ const validateReview = [
     handleValidationErrors
 ];
 
+const validateQuery = [
+    check('page')
+      .optional()
+      .exists({ checkFalsy: true })
+      .isInt({min: 1, max: 10}),
+    check('size')
+      .optional()
+      .exists({ checkFalsy: true })
+      .isInt({min: 1, max: 20}),
+    check('minLat')
+      .optional()
+      .isDecimal(),
+    check('maxLat')
+      .optional()
+      .isDecimal(),
+    check('minLng')
+      .optional()
+      .isDecimal(),
+    check('maxLng')
+      .optional()
+      .isDecimal(),
+    check('minPrice')
+      .optional()
+      .isDecimal(),
+    check('maxPrice')
+      .optional()
+      .isDecimal(),
+    handleValidationErrors
+];
+
 //Get all spots
-router.get('/', async(req, res) => {
+router.get('/', validateQuery, async(req, res) => {
+    const { page = 1, size = 20, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+
+    const limit = size;
+    const offset = size * (page - 1);
+
+    const whereClause = {};
+
+    if (minLat) {
+        whereClause.lat = { [Sequelize.Op.gte]: minLat };
+    }
+
+    if (maxLat) {
+        whereClause.lat = { ...whereClause.lat, [Sequelize.Op.lte]: maxLat };
+    }
+
+    if (minLng) {
+        whereClause.lng = { [Sequelize.Op.gte]: minLng };
+    }
+
+    if (maxLng) {
+        whereClause.lng = { ...whereClause.lng, [Sequelize.Op.lte]: maxLng };
+    }
+
+    if (minPrice) {
+        whereClause.price = { [Sequelize.Op.gte]: minPrice };
+    }
+
+    if (maxPrice) {
+        whereClause.price = { ...whereClause.price, [Sequelize.Op.lte]: maxPrice };
+    }
+
+    console.log(whereClause)
+
     const spots = await Spot.findAll({
-        order: ['id']
+        order: ['id'],
+        limit: limit,
+        offset: offset,
+        where: whereClause
     });
 
     let newSpots = []
@@ -374,6 +440,20 @@ router.post('/:id/reviews', requireAuth, validateReview, async(req, res) => {
         });
     };
 
+    const oldReview = await Review.findAll({
+        where: {
+            userId: req.user.id,
+            spotId: spot.id
+        }
+    });
+
+    if (oldReview) {
+        res.status(500);
+        return res.json({
+            message: "User already has a review for this spot"
+        })
+    };
+
     const { review, stars } = req.body;
 
     const newReview = await spot.createReview({
@@ -384,6 +464,108 @@ router.post('/:id/reviews', requireAuth, validateReview, async(req, res) => {
     });
 
     res.json(newReview);
-})
+});
+
+//Get all bookings for spot by spotId
+router.get('/:id/bookings', requireAuth, async(req, res) => {
+    const spot = await Spot.findByPk(req.params.id);
+
+    if (!spot) {
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found"
+        });
+    };
+
+    const bookings = await Booking.findAll({
+        where: {
+            spotId: req.params.id
+        }
+    });
+
+    const arr = [];
+
+    for (let booking of bookings) {
+        const newBooking = booking.toJSON();
+
+        const user = await User.findOne({
+            where: {
+                id: booking.userId
+            },
+            attributes: ['id', 'firstName', 'lastName']
+        });
+        // console.log(user)
+        const result = {
+            User: user,
+            id: booking.id,
+            spotId: booking.spotId,
+            startDate: booking.startDate,
+            endDate: booking.endDate,
+            createdAt: booking.createdAt,
+            updatedAt: booking.updatedAt
+        };
+
+        arr.push(result)
+    }
+
+
+    res.json({
+        Bookings: arr
+    })
+});
+
+//Create a booking by spotId
+router.post('/:id/bookings', requireAuth, async(req, res) => {
+    const spot = await Spot.findByPk(req.params.id);
+
+    if (!spot) {
+        res.status(404);
+        return res.json({
+            "message": "Spot couldn't be found"
+        });
+    };
+
+    if (spot.ownerId === req.user.id) {
+        res.status(403);
+        return res.json({
+            "message": "Spot cannot be booked by owner"
+        })
+    };
+
+    const { startDate, endDate } = req.body;
+
+    const existingBooking = await Booking.findOne({
+        where: {
+            spotId: req.params.id,
+            [Sequelize.Op.or]: [
+                {
+                  startDate: {
+                    [Sequelize.Op.lte]: endDate
+                  },
+                  endDate: {
+                    [Sequelize.Op.gte]: startDate
+                  }
+                }
+              ],
+
+        }
+    });
+
+    if (existingBooking) {
+        res.status(400);
+        return res.json({
+            message: `This spot is unavailable from ${existingBooking.startDate} to ${existingBooking.endDate}`,
+        })
+    };
+
+    const newBooking = await Booking.create({
+        spotId: spot.id,
+        userId: req.user.id,
+        startDate,
+        endDate
+    });
+
+    res.json(newBooking)
+});
 
 module.exports = router;
