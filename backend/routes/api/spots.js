@@ -380,6 +380,13 @@ router.delete('/:id', requireAuth, async (req, res) => {
         });
     };
 
+    if (spot.userId !== req.user.id) {
+        res.status(403);
+        return res.json({
+            message: "Spot can only be deleted by owner"
+        })
+    }
+
     spot.destroy();
 
     res.json({
@@ -446,12 +453,13 @@ router.post('/:id/reviews', requireAuth, validateReview, async(req, res) => {
             spotId: spot.id
         }
     });
+    // console.log(oldReview)
 
-    if (oldReview) {
+    if (oldReview.length >= 1) {
         res.status(500);
         return res.json({
             message: "User already has a review for this spot"
-        })
+        });
     };
 
     const { review, stars } = req.body;
