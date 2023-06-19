@@ -83,6 +83,20 @@ const validateQuery = [
     handleValidationErrors
 ];
 
+//Verify spot belongs to current user
+const verifySpot = async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.id);
+
+    if (!spot) {
+        res.status(404);
+        return res.json({
+            message: "Spot couldn't be found"
+        });
+    };
+
+    next()
+};
+
 //Get all spots
 router.get('/', validateQuery, async(req, res) => {
     const { page = 1, size = 20, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
@@ -164,7 +178,9 @@ router.get('/', validateQuery, async(req, res) => {
     };
 
     res.json({
-        Spots: newSpots
+        Spots: newSpots,
+        page: page,
+        size: size
     });
 });
 
@@ -174,7 +190,10 @@ router.get('/current', requireAuth, async(req, res) => {
         where: {
             ownerId: req.user.id
         },
-        order: ['id']
+        order: ['id'],
+        attributes: {
+            exclude: ['description']
+        }
     });
 
     let newSpots = []
@@ -248,7 +267,10 @@ router.get('/:id', requireAuth, async (req, res) => {
     const images = await SpotImage.findAll({
         where: {
             spotId: req.params.id
-        }
+        },
+        attributes: {
+            exclude: ['spotId']
+        },
     });
 
     const owner = await User.findOne({
@@ -380,7 +402,7 @@ router.delete('/:id', requireAuth, async (req, res) => {
         });
     };
 
-    if (spot.userId !== req.user.id) {
+    if (spot.ownerId !== req.user.id) {
         res.status(403);
         return res.json({
             message: "Spot can only be deleted by owner"
@@ -416,7 +438,11 @@ router.get('/:id/reviews', async(req, res) => {
     for (let review of reviews) {
         const newReview = review.toJSON();
 
-        const user = await User.findByPk(review.userId);
+        const user = await User.findByPk(review.userId, {
+            attributes: {
+                exclude: ['username']
+            }
+        });
 
         const images = await ReviewImage.findAll({
             where: {
@@ -502,16 +528,22 @@ router.get('/:id/bookings', requireAuth, async(req, res) => {
             },
             attributes: ['id', 'firstName', 'lastName']
         });
-        // console.log(user)
-        const result = {
-            User: user,
-            id: booking.id,
-            spotId: booking.spotId,
-            startDate: booking.startDate,
-            endDate: booking.endDate,
-            createdAt: booking.createdAt,
-            updatedAt: booking.updatedAt
-        };
+
+        let result = {};
+
+        if (req.user.id === spot.ownerId) {
+            result.User = user,
+            result.id = booking.id;
+            result.spotId = booking.spotId;
+            result.startDate = booking.startDate;
+            result.endDate = booking.endDate;
+            result.createdAt = booking.createdAt;
+            result.updatedAt = booking.updatedAt;
+        } else {
+            result.spotId = booking.spotId;
+            result.startDate = booking.startDate;
+            result.endDate = booking.endDate;
+        }
 
         arr.push(result)
     }

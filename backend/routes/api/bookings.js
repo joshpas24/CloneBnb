@@ -23,6 +23,9 @@ router.get('/current', requireAuth, async (req, res) => {
         const spot = await Spot.findOne({
             where: {
                 id: booking.spotId
+            },
+            attributes: {
+                exclude: ['description', 'createdAt', 'updatedAt']
             }
         });
 
