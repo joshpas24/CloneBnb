@@ -29,6 +29,7 @@ const { credential, password } = user;
     }),
   });
   const data = await response.json();
+  console.log("data from thunk: ", data)
   dispatch(addUser(data.user));
   return response;
 }
@@ -39,11 +40,12 @@ const sessionReducer = (state = initialState, action) => {
     let newState;
     switch(action.type) {
         case ADD_USER:
-            newState = Object.assign({}, state);
-            newState.user = action.payload;
+            newState = {...state};
+            newState.user = action.user;
+            // console.log(action.payload)
             return newState;
         case REMOVE_USER:
-            newState = Object.assign({}, state);
+            newState = {...state};
             newState.user = null;
             return newState;
         default:
