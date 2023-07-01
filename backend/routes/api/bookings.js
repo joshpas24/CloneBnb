@@ -15,7 +15,7 @@ router.get('/current', requireAuth, async (req, res) => {
         }
     });
 
-    console.log(bookings)
+    // console.log(bookings)
 
     let arr = [];
 

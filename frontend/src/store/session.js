@@ -29,7 +29,6 @@ const { credential, password } = user;
     }),
   });
   const data = await response.json();
-  console.log("data from thunk: ", data)
   dispatch(setUser(data.user));
   return response;
 }
@@ -76,7 +75,6 @@ const sessionReducer = (state = initialState, action) => {
         case ADD_USER:
             newState = {...state};
             newState.user = action.user;
-            // console.log(action.payload)
             return newState;
         case REMOVE_USER:
             newState = {...state};
