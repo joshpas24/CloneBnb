@@ -1,0 +1,35 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px 30px;
+    font-family: 'Lato', sans-serif;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+input {
+    width: 330px;
+}
+
+.loginDiv {
+    padding: 20px;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginButton {
+    width: 40%;
+}

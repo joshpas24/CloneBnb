@@ -28,7 +28,9 @@ function LoginFormModal() {
 
   return (
     <>
-      <h1>Log In</h1>
+      <h1 className="logo">
+        <i className="fa-solid fa-ghost"></i>
+      </h1>
       <form onSubmit={handleSubmit}>
         <label>
           Username or Email
@@ -51,7 +53,9 @@ function LoginFormModal() {
         {errors.credential && (
           <p>{errors.credential}</p>
         )}
-        <button type="submit">Log In</button>
+        <div className="loginDiv">
+          <button type="submit" className="loginButton">Log In</button>
+        </div>
       </form>
     </>
   );

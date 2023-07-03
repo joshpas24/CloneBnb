@@ -1,0 +1,18 @@
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(203, 0, 0, 1);
+}
+
+.signupDiv {
+    padding: 20px;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signupButton {
+    width: 40%;
+}

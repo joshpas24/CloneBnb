@@ -1,3 +1,61 @@
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Lato', sans-serif;
+}
+
 .hidden {
     display: none;
+}
+
+.navBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    size: 100px;
+    background-color: rgba(203, 0, 0, 1);
+    padding: 30px;
+    height: fit-content;
+};
+
+#homeButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 18pt !important;
+    gap: 5px;
+}
+
+.navButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    border: 2px solid rgba(203, 0, 0, 0.8);
+    border-radius: 5px;
+    background-color: rgba(203, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    font-size: 14pt;
+    cursor: pointer;
+}
+
+.navButton:hover {
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+.navButton:active {
+    background-color: white;
+    color:rgba(203, 0, 0, 0.8)
+}
+
+.navRight {
+    display: flex;
+    gap: 12px;
+}
+
+.navLeft {
+    font-size: 24pt;
 }
