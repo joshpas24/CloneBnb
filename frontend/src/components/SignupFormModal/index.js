@@ -109,10 +109,10 @@ function SignupFormModal() {
         {errors.confirmPassword && (
           <p>{errors.confirmPassword}</p>
         )}
+        <div className="signupDiv">
+          <button type="submit" className="signupButton">Sign Up</button>
+        </div>
       </form>
-      <div className="signupDiv">
-        <button type="submit" className="signupButton">Sign Up</button>
-      </div>
     </>
   );
 }

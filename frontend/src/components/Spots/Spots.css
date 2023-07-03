@@ -1,7 +1,7 @@
 .spotsGrid {
     display: grid;
     grid-auto-flow: row dense;
-    grid-template-columns: repeat(4, 250px);
+    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     padding: 50px 70px;
     font-family: 'Lato', sans-serif;
