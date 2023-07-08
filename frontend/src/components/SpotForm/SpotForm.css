@@ -1,0 +1,104 @@
+
+h1 {
+    font-size: 24pt;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 20px 0;
+    width: 45%;
+    border-bottom: 2px solid lightgray;
+    gap: none;
+}
+
+.create-spot {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 45%;
+    font-family: 'Lato', sans-serif;
+}
+
+.create-spot section {
+    padding-bottom: 30px;
+    border-bottom: 2px solid lightgray;
+}
+
+section input {
+    width: 95%
+}
+
+section textarea {
+    width: 95%;
+    height: 70px;
+}
+
+section h2 {
+    font-size: 16pt;
+}
+
+section h3 {
+    font-size: 12pt;
+    text-decoration: none;
+}
+
+label {
+    padding-top: 15px;
+    font-size: 12pt;
+}
+
+textarea {
+    font-family: 'Lato', sans-serif;
+}
+
+.create-location {
+    gap: 6px;
+}
+
+.same-line {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 97.4%
+}
+
+.add-images div {
+    gap: 10px
+}
+
+.image-entry {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 10px;
+    padding-top: 15px;
+}
+
+.form-bottom-div {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.create-spot-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    border: 2px solid white;
+    border-radius: 5px;
+    background-color: rgba(203, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    font-size: 14pt;
+    cursor: pointer;
+}
+
+.create-spot-button:hover {
+    border: 2px solid rgba(203, 0, 0, 0.8);
+    color: rgba(203, 0, 0, 0.8);
+    background-color: white;
+    border-radius: 5px;
+}

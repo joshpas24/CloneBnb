@@ -39,6 +39,9 @@ const validateSpot = [
     check('price')
       .exists({ checkFalsy: true })
       .withMessage('Price per day is required'),
+    check('price')
+      .isNumeric()
+      .withMessage('Price must be a number'),
     handleValidationErrors
 ];
 
@@ -283,6 +286,7 @@ router.get('/:id', requireAuth, async (req, res) => {
     const result = {
         id: spot.id,
         ownerId: spot.ownerId,
+        name: spot.name,
         address: spot.address,
         city: spot.city,
         state: spot.state,

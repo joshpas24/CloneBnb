@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: 'CASCADE'
     },
-    url: DataTypes.STRING
+    url: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'ReviewImage',

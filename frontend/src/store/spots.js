@@ -1,8 +1,11 @@
-
+import { csrfFetch } from "./csrf";
 
 //ACTION TYPES
 export const LOAD_SPOTS = "spots/getSpots";
-export const LOAD_SPOT = "spots/getSpot"
+export const LOAD_SPOT = "spots/getSpot";
+export const CREATE_SPOT = "spots/createSpot";
+export const DELETE_SPOT = "spots/deleteSpot";
+export const UPDATE_SPOT = "spots/updateSpot"
 
 //ACTION CREATORS
 export const getSpots = (spots) => {
@@ -15,6 +18,27 @@ export const getSpots = (spots) => {
 export const getSpot = (spot) => {
     return {
         type: LOAD_SPOT,
+        spot
+    }
+}
+
+export const createSpot = (spot) => {
+    return {
+        type: CREATE_SPOT,
+        spot
+    }
+}
+
+export const deleteSpot = (spot) => {
+    return {
+        type: DELETE_SPOT,
+        spot
+    }
+}
+
+export const updateSpot = (spot) => {
+    return {
+        type: UPDATE_SPOT,
         spot
     }
 }
@@ -38,13 +62,73 @@ export const thunkGetSpot = (spotId) => async (dispatch) => {
         method: "GET",
         headers: {"Content-Type": "application/json"}
     });
-    console.log("response from api: ", res)
+    // console.log("response from api: ", res)
 
     if (res.ok) {
         const data = await res.json();
-        console.log("data from thunk: ", data)
+        // console.log("data from thunk: ", data)
         dispatch(getSpot(data))
     }
+}
+
+export const thunkCreateSpot = (spot, images) => async (dispatch) => {
+    try {
+        const res = await csrfFetch("/api/spots", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(spot)
+        });
+
+        const data = await res.json();
+
+        console.log("data from create thunk: ", data)
+        dispatch(thunkAddImageToSpot(data, images))
+
+        return data
+
+    } catch (error) {
+        const errors = await error.json()
+        return errors
+    }
+
+
+}
+
+export const thunkAddImageToSpot = (spot, images) => async (dispatch) => {
+    images.forEach( async (image) => {
+        const res = await csrfFetch(`/api/spots/${spot.id}/images`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(image)
+        })
+    })
+    dispatch(createSpot(spot))
+}
+
+export const thunkDeleteSpot = (spot) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${spot.id}`, {
+        method: "DELETE",
+        headers: {"Content-Type": "application/json"}
+    });
+
+    if (res.ok) {
+        dispatch(deleteSpot(spot))
+    }
+}
+
+export const thunkUpdateSpot = (spot) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${spot.id}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(spot)
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+        dispatch(updateSpot(data))
+    }
+
+    return data;
 }
 
 const initialState = { allSpots: {}, singleSpot: {} }
@@ -54,16 +138,28 @@ export const spotsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case LOAD_SPOTS:
-            newState = { ...state };
+            newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: {} };
             // console.log("from the reducer: ", newState.spots)
             action.spots.forEach(spot => {
                 newState.allSpots[spot.id] = spot
             });
             return newState;
         case LOAD_SPOT:
-            newState = { ...state };
+            newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: {} };
             newState.singleSpot = action.spot
             return newState;
+        case CREATE_SPOT:
+            newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: { ...action.spot } };
+            newState.allSpots[action.spot.id] = action.spot
+            return newState;
+        case DELETE_SPOT:
+            newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: {} }
+            delete newState.allSpots[action.spot.id]
+            return newState;
+        case UPDATE_SPOT:
+            newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: { ...action.spot } };
+            newState.allSpots[action.spot.id] = action.spot
+            return newState
         default:
             return state;
     }

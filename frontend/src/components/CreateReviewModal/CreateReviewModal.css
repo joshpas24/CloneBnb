@@ -1,0 +1,24 @@
+.review-modal {
+    padding: 30px;
+    width: 60%;
+}
+
+.review-form {
+    /* width: 100%; */
+    display: flex;
+    align-items: center;
+}
+
+.rating-input {
+    display: flex;
+    flex-direction: row;
+}
+
+.rating-input .empty {
+    color: rgba(159, 159, 159, 1);
+}
+
+.rating-input .empty:hover,
+.rating-input .filled {
+  color: rgba(242, 201, 0, 1);
+}

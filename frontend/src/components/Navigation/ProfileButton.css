@@ -36,6 +36,10 @@
     font-weight: bold;
 }
 
+.manage-profile:hover {
+    text-decoration: underline;
+}
+
 .profile-dropdown button {
     background-color: rgba(203, 0, 0, 1);
     display: flex;

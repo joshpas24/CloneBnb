@@ -1,0 +1,17 @@
+.review {
+    padding-bottom: 15px;
+}
+
+.review-name {
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.review-date {
+    font-size: 12pt;
+    padding-bottom: 10px;
+}
+
+.review-review {
+    padding-bottom: 10px;
+}
