@@ -68,6 +68,7 @@ export const thunkGetSpot = (spotId) => async (dispatch) => {
         const data = await res.json();
         // console.log("data from thunk: ", data)
         dispatch(getSpot(data))
+        return data
     }
 }
 
@@ -117,18 +118,25 @@ export const thunkDeleteSpot = (spot) => async (dispatch) => {
 }
 
 export const thunkUpdateSpot = (spot) => async (dispatch) => {
-    const res = await csrfFetch(`/api/spots/${spot.id}`, {
-        method: "PUT",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(spot)
-    });
-    const data = await res.json();
+    try {
+        const res = await csrfFetch(`/api/spots/${spot.id}`, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(spot)
+        });
+        const data = await res.json();
+        console.log("data from thunk: ", data)
 
-    if (res.ok) {
-        dispatch(updateSpot(data))
+        if (res.ok) {
+            dispatch(updateSpot(data))
+        }
+
+        return data;
+    } catch (error) {
+        const errors = await error.json();
+        return errors
     }
 
-    return data;
 }
 
 const initialState = { allSpots: {}, singleSpot: {} }

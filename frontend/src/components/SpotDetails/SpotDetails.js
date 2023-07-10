@@ -1,44 +1,124 @@
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { thunkGetSpot } from '../../store/spots';
-import ReviewsIndex from '../Reviews';
 import OpenModalButton from '../OpenModalButton';
 import './SpotDetails.css';
 import CreateReview from '../CreateReviewModal';
+import { thunkGetSpotReviews, thunkDeleteReview } from '../../store/reviews';
+import DeleteReviewModal from '../DeleteModal/DeleteReview';
 
 function SpotDetails() {
     const dispatch = useDispatch();
     const history = useHistory();
     const { spotId } = useParams();
+    const [spotReviews, setSpotReviews] = useState({})
+
+    const reviewsObj = useSelector(state=>state.reviews.spot);
+    const reviews = Object.values(reviewsObj)
+
+    useEffect(() => {
+        dispatch(thunkGetSpot(spotId))
+
+        dispatch(thunkGetSpotReviews(spotId))
+
+    }, [dispatch])
 
     const spotsObj = useSelector(state=>state.spots)
     const spot = spotsObj.singleSpot
 
     const user = useSelector(state=>state.session.user)
+    // console.log("user: ", user)
+    // console.log("user firstName: ", user.firstName)
 
-    const reviewsObj = useSelector(state=>state.reviews.spot);
-
-    useEffect(() => {
-        dispatch(thunkGetSpot(spotId))
-    }, [dispatch])
 
     if (!spot.SpotImages) return null;
     const images = Object.values(spot.SpotImages)
     // console.log("images: ",images)
 
-    const reviews = Object.values(reviewsObj)
-    const existingReview = reviews.find(review=>review.userId === user.id)
+    let existingReview
+
+    if (user) {
+        existingReview = reviews.find(review=>review.userId === user.id)
+    }
+
     const toggleCreateReview = () => {
+        if (!user) {
+            return "";
+        }
+
         if ((spot.ownerId === user.id) || existingReview) {
-            return true
+            return "";
         } else {
-            return false
+            return (
+                <OpenModalButton
+                    className="small-button"
+                    buttonText="Post Your Review"
+                    modalComponent={<CreateReview spotId={spot.id}/>}
+                />
+            )
+        }
+    }
+
+    const toggleDeleteReview = (review, spotId) => {
+        if (!user) {
+            return "";
+        }
+
+        if (review.userId === user.id) {
+            return (
+                <OpenModalButton
+                    className="small-button"
+                    buttonText="Delete"
+                    modalComponent={<DeleteReviewModal review={review} spotId={spotId}/>}
+                />
+            )
+        } else {
+            return "";
         }
     }
 
     const handleReserve = () => {
         alert('Feature coming soon!')
+    }
+
+    const handleReviewName = (review) => {
+        if (user) {
+            if (review.userId === user.id) {
+                return user.firstName
+            } else {
+                return review.User.firstName
+            }
+        } else {
+            return review.User.firstName
+        }
+    }
+
+    const handleReviewList = () => {
+        if (user && !reviews.length) {
+            return (
+                <>
+                    <h4>Be the first to post a review!</h4>
+                </>
+            )
+        } else {
+            const res = (reviews.slice().reverse().map(review => (
+                <div className='review'>
+                    <div className='review-name'>{handleReviewName(review)}</div>
+                    <div className='review-date'>{formatDate(review.createdAt)}</div>
+                    <div className='review-review'>{review.review}</div>
+                    {toggleDeleteReview(review, spot.id)}
+                </div>
+            )))
+
+            return res;
+        }
+    }
+
+    function formatDate(dateString) {
+        const options = { year: 'numeric', month: 'long' };
+        const date = new Date(dateString);
+        return date.toLocaleDateString(undefined, options);
     }
 
     return (
@@ -71,7 +151,7 @@ function SpotDetails() {
             </div>
             <div className='spot-mid'>
                 <div className='description'>
-                    <div className='host'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</div>
+                    <div className='host'>Hosted by {spot.Owner && spot.Owner.firstName} {spot.Owner && spot.Owner.lastName}</div>
                     <div>{spot.description}</div>
                 </div>
                 <div className='reserve-box'>
@@ -79,7 +159,7 @@ function SpotDetails() {
                         <div className='reserve-price'><span>${spot.price}</span> night</div>
                         <div className='reserve-top-right'>
                             <i className="fa-solid fa-star"></i>
-                            {reviews.length === 0 ? "New · 0 reviews" : `${spot.avgStarRating ? spot.avgStarRating.toFixed(1) : ""} · ${reviews.length} ${reviews.length === 1 ? "review" : "reviews"}`}
+                            {reviews.length === 0 ? "New" : `${spot.avgStarRating ? spot.avgStarRating.toFixed(1) : ""} · ${reviews.length} ${reviews.length === 1 ? "review" : "reviews"}`}
                         </div>
                     </div>
                     <button className='reserve-button'>
@@ -90,17 +170,12 @@ function SpotDetails() {
             <div className='spot-bottom'>
                 <h3 className='spot-bottom-header'>
                     <i className="fa-solid fa-star"></i>
-                    {reviews.length === 0 ? "New · 0 reviews" : `${spot.avgStarRating ? spot.avgStarRating.toFixed(1) : ""} · ${reviews.length} ${reviews.length === 1 ? "review" : "reviews"}`}
+                    {reviews.length === 0 ? "New" : `${spot.avgStarRating ? spot.avgStarRating.toFixed(1) : ""} · ${reviews.length} ${reviews.length === 1 ? "review" : "reviews"}`}
                 </h3>
                 <div className='add-review'>
-                    {toggleCreateReview() ? "" : <OpenModalButton
-                            className="small-button"
-                            buttonText="Add Review"
-                            modalComponent={<CreateReview spotId={spot.id}/>}
-                            />
-                    }
+                    {toggleCreateReview()}
                 </div>
-                <ReviewsIndex parent="spot" />
+                {handleReviewList()}
             </div>
         </div>
     )

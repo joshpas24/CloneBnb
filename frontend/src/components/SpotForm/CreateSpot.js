@@ -83,8 +83,8 @@ const CreateSpotForm = () => {
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                     />
+                    {errors.address && <p>{errors.address}</p>}
                 </label>
-                {errors.address && <p>{errors.address}</p>}
                 <div className="same-line">
                     <label>
                         City
@@ -93,8 +93,8 @@ const CreateSpotForm = () => {
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
                         />
+                        {errors.city && <p>{errors.city}</p>}
                     </label>
-                    {errors.city && <p>{errors.city}</p>}
                     <label>
                         State
                         <input
@@ -102,8 +102,8 @@ const CreateSpotForm = () => {
                             value={state}
                             onChange={(e) => setState(e.target.value)}
                         />
+                        {errors.state && <p>{errors.state}</p>}
                     </label>
-                    {errors.state && <p>{errors.state}</p>}
                 </div>
                 <label>
                     Country
@@ -112,6 +112,7 @@ const CreateSpotForm = () => {
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
                     />
+                    {errors.country && <p>{errors.country}</p>}
                 </label>
                 <div className="same-line">
                     <label>
@@ -121,8 +122,8 @@ const CreateSpotForm = () => {
                             value={lat}
                             onChange={(e) => setLat(e.target.value)}
                         />
+                        {errors.lat && <p>{errors.lat}</p>}
                     </label>
-                    {errors.lat && <p>{errors.lat}</p>}
                     <label>
                         Longitude
                         <input
@@ -130,24 +131,25 @@ const CreateSpotForm = () => {
                             value={lng}
                             onChange={(e) => setLng(e.target.value)}
                         />
+                        {errors.lng && <p>{errors.lng}</p>}
                     </label>
-                    {errors.lng && <p>{errors.lng}</p>}
                 </div>
             </section>
             <section>
                 <h2>Describe your place to guests</h2>
                 <h3>Mention the best features of your space, any special amentities like fast wif or parking, and what you love about the neighborhood.</h3>
                 <textarea
-                    placeholder="e.g. Fast Wi-Fi, walkable distance to bars and restaurants, & located in safe neighborhood, this is the spot to get the perfect LA experience!"
+                    placeholder="Please write at least 30 characters"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
+                {errors.description && <p>{errors.description}</p>}
             </section>
             <section>
                 <h2>Create a title for your spot</h2>
                 <h3>Catch guests' attention with a spot title that highlights what makes your place special.</h3>
                 <input
-                    placeholder="e.g. LA Dream House"
+                    placeholder="Name of your spot"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
@@ -159,10 +161,11 @@ const CreateSpotForm = () => {
                 <div className="image-entry">
                     $ <input
                         value={price}
+                        placeholder="Price per night (USD)"
                         onChange={(e) => setPrice(e.target.value)}
                     />
+                    {errors.price && <p>{errors.price}</p>}
                 </div>
-                {errors.price && <p>{errors.price}</p>}
             </section>
             <section className="add-images">
                 <h2>Liven up your spot with photos</h2>
@@ -175,7 +178,7 @@ const CreateSpotForm = () => {
                     />
                     <input
                         type="text"
-                        placeholder="Image URL (required)"
+                        placeholder="Preview Image URL"
                         onChange={(e) => addImage(e)}
                     />
                 </div>

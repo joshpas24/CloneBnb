@@ -1,12 +1,21 @@
 .review-modal {
     padding: 30px;
-    width: 60%;
+    /* width: 60%; */
+    display: flex;
+    flex-direction: column;
+    margin: 0;
 }
 
 .review-form {
     /* width: 100%; */
     display: flex;
     align-items: center;
+    padding: 0;
+}
+
+.review-form textarea {
+    width: 100%;
+    height: 100px;
 }
 
 .rating-input {

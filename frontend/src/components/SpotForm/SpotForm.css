@@ -45,6 +45,12 @@ section h3 {
     text-decoration: none;
 }
 
+ p {
+    font-size: 9pt;
+    color: red;
+    margin-top: 2px;
+ }
+
 label {
     padding-top: 15px;
     font-size: 12pt;

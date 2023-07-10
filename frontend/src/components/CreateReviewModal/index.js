@@ -8,29 +8,47 @@ import './CreateReviewModal.css'
 const CreateReview = ({ spotId }) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [review, setReview] = useState();
+    const [review, setReview] = useState("");
     const [stars, setStars] = useState(0);
+    const [disabled, setDisabled] = useState(true)
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
 
-    // useEffect(() => {
-    //     setRating(rating)
-    // }, [rating])
+    useEffect(() => {
+        if (review.length >= 10) {
+            setDisabled(false)
+        }
+    }, [review])
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!review) {
+            const newError = {...errors}
+            newError.review = "Review is required"
+            setErrors(newError)
+            return;
+        }
+
+        if (!stars) {
+            const newError = {...errors}
+            newError.stars = "Star rating is required"
+            setErrors(newError)
+            return;
+        }
 
         const newReview = {
             review,
             stars
         }
-        console.log("review sent to thunk: ", newReview);
+        // console.log("review sent to thunk: ", newReview);
 
         dispatch(thunkCreateReview(newReview, spotId))
             .then((res) => {
+                console.log("res received from thunk: ", res)
                 if (res.errors) {
-                    console.log(res.errors)
-                    setErrors(res.errors)
+                    // console.log(res.errors)
+                    setErrors("errors from create review thunk: ",res.errors)
                 } else {
                     history.push(`/spots/${spotId}`)
                 }
@@ -47,7 +65,8 @@ const CreateReview = ({ spotId }) => {
         <div className='review-modal'>
             <h2>How was your stay?</h2>
             <form onSubmit={(e) => handleSubmit(e)} className='review-form'>
-                <textarea placeholder='Type review here!'
+                {errors.review && <p>{errors.review}</p>}
+                <textarea placeholder='Leave your review here...'
                     onChange={(e) => handleReview(e)}
                 />
                 <div className='rating-input'>
@@ -77,7 +96,8 @@ const CreateReview = ({ spotId }) => {
                         <i className="fa-solid fa-star"></i>
                     </div>
                 </div>
-                <button>Submit Review</button>
+                {errors.stars && <p>{errors.stars}</p>}
+                <button disabled={disabled} className='small-button'>Submit Your Review</button>
             </form>
         </div>
     )

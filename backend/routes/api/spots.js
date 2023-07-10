@@ -49,6 +49,9 @@ const validateReview = [
     check('review')
       .exists({ checkFalsy: true })
       .withMessage('Review text is required'),
+    check('review')
+      .isLength({ min: 30 })
+      .withMessage('Description must be at least 30 characters'),
     check('stars')
       .exists({ checkFalsy: true })
       .isInt({min: 1, max: 5})
@@ -243,7 +246,7 @@ router.get('/current', requireAuth, async(req, res) => {
 });
 
 //Get details of a Spot from an id
-router.get('/:id', requireAuth, async (req, res) => {
+router.get('/:id', async (req, res) => {
     const spot = await Spot.findByPk(req.params.id);
 
     if (!spot) {

@@ -26,7 +26,7 @@ const SpotsIndex = () => {
     return (
         <div className='spotsGrid'>
             {spots.map((spot) => (
-                <div className='spotBox' onClick={() => getDetails(spot.id)} key={spot.id}>
+                <div className='spotBox' onClick={() => getDetails(spot.id)} key={spot.id} title={spot.name}>
                     <div className='spotImageDiv'>
                         <img src={`${spot.previewImage}`} className='spotImage'/>
                     </div>

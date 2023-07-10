@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { thunkCreateSpot, thunkUpdateSpot } from "../../store/spots";
+import { thunkCreateSpot, thunkGetSpot, thunkUpdateSpot } from "../../store/spots";
 import './SpotForm.css'
 
 const UpdateSpotForm = () => {
@@ -25,6 +25,28 @@ const UpdateSpotForm = () => {
     const [preview, setPreview] = useState(0);
     const [errors, setErrors] = useState({});
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await dispatch(thunkGetSpot(spotId))
+            setCountry(data.country)
+            setAddress(data.address)
+            setCity(data.city)
+            setState(data.state)
+            setDescription(data.description)
+            setName(data.name)
+            setPrice(data.price)
+
+            if (data.lat) {
+                setLat(data.lat)
+            }
+
+            if (data.lng) {
+                setLng(data.lng)
+            }
+        }
+        fetchData()
+    }, [dispatch, spotId])
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -44,14 +66,15 @@ const UpdateSpotForm = () => {
         dispatch(thunkUpdateSpot(updatedSpot))
             .then((res) => {
                 console.log("res from dispatch thunk creator: ",res)
-                if (!res.errors) {
-                    const id = res.id;
-                    history.push(`/spots/${id}`);
+                if (res.errors) {
+                    setErrors(res.errors)
+                    console.log("errors set from thunk res: ", errors)
+                } else {
+                    history.push(`/spots/${res.id}`);
                 }
-            })
-            .catch((errors) => {
-                setErrors(errors)
-              });
+            });
+
+        return;
 
     };
 
@@ -78,7 +101,7 @@ const UpdateSpotForm = () => {
     return (
         <>
         <h1>Update Spot</h1>
-        <form className="create-spot" onSubmit={handleSubmit}>
+        <form className="create-spot" onSubmit={(e) => handleSubmit(e)}>
             <section className="create-location">
                 <h2>Where's your place located?</h2>
                 <h3>Guests will only get your exact address once they booked a reservation.</h3>
@@ -89,8 +112,8 @@ const UpdateSpotForm = () => {
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                     />
+                    {errors.address && <p>{errors.address}</p>}
                 </label>
-                {errors.address && <p>{errors.address}</p>}
                 <div className="same-line">
                     <label>
                         City
@@ -99,8 +122,8 @@ const UpdateSpotForm = () => {
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
                         />
+                        {errors.city && <p>{errors.city}</p>}
                     </label>
-                    {errors.city && <p>{errors.city}</p>}
                     <label>
                         State
                         <input
@@ -108,8 +131,8 @@ const UpdateSpotForm = () => {
                             value={state}
                             onChange={(e) => setState(e.target.value)}
                         />
+                        {errors.state && <p>{errors.state}</p>}
                     </label>
-                    {errors.state && <p>{errors.state}</p>}
                 </div>
                 <label>
                     Country
@@ -118,6 +141,7 @@ const UpdateSpotForm = () => {
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
                     />
+                    {errors.country && <p>{errors.country}</p>}
                 </label>
                 <div className="same-line">
                     <label>
@@ -127,8 +151,8 @@ const UpdateSpotForm = () => {
                             value={lat}
                             onChange={(e) => setLat(e.target.value)}
                         />
+                        {errors.lat && <p>{errors.lat}</p>}
                     </label>
-                    {errors.lat && <p>{errors.lat}</p>}
                     <label>
                         Longitude
                         <input
@@ -136,8 +160,8 @@ const UpdateSpotForm = () => {
                             value={lng}
                             onChange={(e) => setLng(e.target.value)}
                         />
+                        {errors.lng && <p>{errors.lng}</p>}
                     </label>
-                    {errors.lng && <p>{errors.lng}</p>}
                 </div>
             </section>
             <section>
@@ -148,6 +172,7 @@ const UpdateSpotForm = () => {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
+                {errors.description && <p>{errors.description}</p>}
             </section>
             <section>
                 <h2>Create a title for your spot</h2>
@@ -167,8 +192,8 @@ const UpdateSpotForm = () => {
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                     />
+                    {errors.name && <p>{errors.name}</p>}
                 </div>
-                {errors.name && <p>{errors.name}</p>}
             </section>
             <section className="add-images">
                 <h2>Liven up your spot with photos</h2>

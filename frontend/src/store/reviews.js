@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+// import { restoreUser } from "./session";
 
 
 //ACTION TYPES
@@ -43,10 +44,14 @@ export const thunkGetSpotReviews = (spotId) => async (dispatch) => {
         headers: {"Content-Type": "application/json"}
     });
 
+    // const user = dispatch(restoreUser())
+
     if (res.ok) {
         const data = await res.json();
+        // data.User = user;
         // console.log("data from reviews thunk: ", data.Reviews)
         dispatch(getSpotReviews(data.Reviews))
+        return data;
     }
 };
 

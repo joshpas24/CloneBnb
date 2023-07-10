@@ -157,3 +157,23 @@
     color: rgba(203, 0, 0, 0.8);
     border-radius: 5px;
 }
+
+.review {
+    padding-bottom: 0;
+    border-bottom: 1px solid lightgray;
+}
+
+.review-name {
+    padding-top: 10px;
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.review-date {
+    font-size: 12pt;
+    padding-bottom: 10px;
+}
+
+.review-review {
+    padding-bottom: 15px;
+}

@@ -23,10 +23,12 @@ function Navigation({ isLoaded }) {
       <div className="navRight">
         <OpenModalButton
           buttonText="Log In"
+          className="navButton"
           modalComponent={<LoginFormModal />}
         />
         <OpenModalButton
           buttonText="Sign Up"
+          className="navButton"
           modalComponent={<SignupFormModal />}
         />
       </div>

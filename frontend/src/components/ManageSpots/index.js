@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory, NavLink } from 'react-router-dom'
 import { thunkGetSpot, thunkGetSpots } from '../../store/spots';
 import OpenModalButton from '../OpenModalButton';
-import DeleteSpotModal from '../DeleteSpotModal';
-import SpotForm from '../SpotForm/CreateSpot';
+import DeleteSpotModal from '../DeleteModal/DeleteSpot';
+import './ManageSpots.css';
 
 
 const ManageSpots = () => {
@@ -15,6 +15,10 @@ const ManageSpots = () => {
     const spotsArr = Object.values(spotsObj.allSpots);
     const spots = [];
     spotsArr.forEach(spot => {
+        if (!user) {
+            return;
+        }
+
         if (spot.ownerId === user.id) {
             spots.push(spot)
         }
@@ -33,45 +37,58 @@ const ManageSpots = () => {
     const updateForm = (spotId) => {
         dispatch(thunkGetSpot(spotId))
         history.push(`/spots/${spotId}/update`)
-        // return (
-        //     <SpotForm formtype={'update'} />
-        // )
+        return;
+    }
+
+    function handleRender() {
+        if (!spots.length) {
+            return (
+                <div className='no-spots-link'>
+                    <NavLink to='/spots/create'>Create a New Spot</NavLink>
+                </div>
+            );
+        } else {
+            return (
+                <>
+                    <h1>Manage Spots</h1>
+                    <div className='spotsGrid'>
+                        {spots.map((spot) => (
+                            <div>
+                                <div className='spotBox' onClick={() => getDetails(spot.id)}>
+                                    <div className='spotImageDiv'>
+                                        <img src={`${spot.previewImage}`} className='spotImage' />
+                                    </div>
+                                    <div className='spotInfo'>
+                                        <div className='spotInfoTop'>
+                                            <div>{`${spot.city}, ${spot.state}`}</div>
+                                            <div className='spotInfoRating'>
+                                                <i className="fa-solid fa-star"></i>
+                                                <div>{!spot.avgRating ? "New" : `${spot.avgRating.toFixed(1)}`}</div>
+                                            </div>
+                                        </div>
+                                        <div className='spotInfoBottom'>
+                                            {`$${spot.price} night`}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='manage-buttons'>
+                                    <button onClick={() => updateForm(spot.id)} className='small-button'>Update</button>
+                                    <OpenModalButton
+                                        className="small-button"
+                                        buttonText="Delete"
+                                        modalComponent={<DeleteSpotModal spot={spot} />} />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </>
+            );
+        }
     }
 
     return (
         <>
-            <h1>Manage Spots</h1>
-            <div className='spotsGrid'>
-                {spots.map((spot) => (
-                    <div>
-                        <div className='spotBox' onClick={() => getDetails(spot.id)}>
-                            <div className='spotImageDiv'>
-                                <img src={`${spot.previewImage}`} className='spotImage'/>
-                            </div>
-                            <div className='spotInfo'>
-                                <div className='spotInfoTop'>
-                                    <div>{`${spot.city}, ${spot.state}`}</div>
-                                    <div className='spotInfoRating'>
-                                        <i className="fa-solid fa-star"></i>
-                                        <div>{!spot.avgRating ? "New" : `${spot.avgRating.toFixed(1)}`}</div>
-                                    </div>
-                                </div>
-                                <div className='spotInfoBottom'>
-                                    {`$${spot.price} night`}
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <button onClick={() => updateForm(spot.id)}>Update</button>
-                            <OpenModalButton
-                            className="delete-button"
-                            buttonText="Delete"
-                            modalComponent={<DeleteSpotModal spot={spot}/>}
-                            />
-                        </div>
-                    </div>
-                ))}
-            </div>
+            {handleRender()}
         </>
     )
 }

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { thunkDeleteReview, thunkGetSpotReviews } from '../../store/reviews';
 import './Reviews.css'
 
@@ -9,14 +9,15 @@ const ReviewsIndex = ({ parent }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { spotId } = useParams();
-    const user = useSelector(state=>state.session.user)
+    const user = useSelector(state=>state.session.user);
     const reviewsObj = useSelector(state=>state.reviews);
     const reviews = Object.values(reviewsObj.spot);
+    // const reviews = Object.values(spotReviews);
     // console.log("reviews from components: ",reviews)
 
     useEffect(() => {
         dispatch(thunkGetSpotReviews(spotId))
-    }, [spotId])
+    }, [dispatch])
 
     function formatDate(dateString) {
         const options = { year: 'numeric', month: 'long' };
