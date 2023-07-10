@@ -51,7 +51,7 @@ module.exports = {
     }, options);
 
     options.tableName = 'Bookings';
-    await queryInterface.addConstraint('Bookings', {
+    await queryInterface.addConstraint(options, {
       fields: ['endDate'],
       type: 'check',
       where: {
