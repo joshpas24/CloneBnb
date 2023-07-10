@@ -19,9 +19,16 @@ function SpotDetails() {
 
     useEffect(() => {
         dispatch(thunkGetSpot(spotId))
-
         dispatch(thunkGetSpotReviews(spotId))
 
+        // const fetchSpot = async () => {
+        //     await dispatch(thunkGetSpot(spotId))
+        // }
+        // const fetchReview = async () => {
+        //     await dispatch(thunkGetSpotReviews(spotId))
+        // }
+        // fetchSpot()
+        // fetchReview()
     }, [dispatch])
 
     const spotsObj = useSelector(state=>state.spots)
