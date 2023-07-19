@@ -42,13 +42,11 @@ const CreateReview = ({ spotId }) => {
             review,
             stars
         }
-        // console.log("review sent to thunk: ", newReview);
 
         dispatch(thunkCreateReview(newReview, spotId))
             .then((res) => {
                 console.log("res received from thunk: ", res)
                 if (res.errors) {
-                    // console.log(res.errors)
                     setErrors(res.errors)
                 } else {
                     history.push(`/spots/${spotId}`)

@@ -14,6 +14,7 @@ const ManageSpots = () => {
     const spotsObj = useSelector(state=>state.spots);
     const spotsArr = Object.values(spotsObj.allSpots);
     const spots = [];
+    
     spotsArr.forEach(spot => {
         if (!user) {
             return;
@@ -23,7 +24,6 @@ const ManageSpots = () => {
             spots.push(spot)
         }
     })
-    console.log("user spots: ", spots)
 
     useEffect(() => {
         dispatch(thunkGetSpots())

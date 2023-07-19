@@ -10,16 +10,12 @@ const SpotsIndex = () => {
     const spotsObj = useSelector(state=>state.spots.allSpots);
     console.log("state obj from index component: ", spotsObj)
     const spots = Object.values(spotsObj);
-    // console.log("from the Spots component: ", spots);
-
-    // const spots = useSelector(state=>state.spots.allSpots);
 
     useEffect(() => {
         dispatch(thunkGetSpots())
     }, [dispatch])
 
     const getDetails = (spotId) => {
-        // e.preventDefault();
         history.push(`/spots/${spotId}`)
     }
 

@@ -25,12 +25,10 @@ function LoginFormModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
-    // console.log(credential, password)
     dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .catch(async (data) => {
         const err = await data.json();
-        console.log("data received from thunk: ", err)
         if (err.errors) {
           setErrors(err.errors)
         }

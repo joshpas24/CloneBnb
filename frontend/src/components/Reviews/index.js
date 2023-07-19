@@ -12,8 +12,6 @@ const ReviewsIndex = ({ parent }) => {
     const user = useSelector(state=>state.session.user);
     const reviewsObj = useSelector(state=>state.reviews);
     const reviews = Object.values(reviewsObj.spot);
-    // const reviews = Object.values(spotReviews);
-    // console.log("reviews from components: ",reviews)
 
     useEffect(() => {
         dispatch(thunkGetSpotReviews(spotId))
@@ -26,7 +24,6 @@ const ReviewsIndex = ({ parent }) => {
     }
 
     const handleDelete = (review) => {
-        console.log("review sent to delete thunk: ", review)
         dispatch(thunkDeleteReview(review))
         history.push(`/spots/${spotId}`)
     }

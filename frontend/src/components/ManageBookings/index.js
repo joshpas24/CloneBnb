@@ -13,7 +13,6 @@ const ManageBookings = () => {
 
     const bookingsObj = useSelector(state=>state.bookings.user)
     const bookings = Object.values(bookingsObj).reverse();
-    console.log("bookings in manage bookings component: ", bookings)
 
     useEffect(() => {
         dispatch(thunkGetUserBookings())

@@ -33,11 +33,9 @@ const CreateSpotForm = () => {
             name,
             price
         };
-        console.log("spot to be sent from dispatch: ", spot)
 
         dispatch(thunkCreateSpot(spot, images))
             .then((res) => {
-                console.log("res from dispatch thunk creator: ",res)
                 if (res.errors) {
                     setErrors(res.errors)
                 } else {
