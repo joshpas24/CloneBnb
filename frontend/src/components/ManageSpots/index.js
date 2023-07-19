@@ -43,9 +43,12 @@ const ManageSpots = () => {
     function handleRender() {
         if (!spots.length) {
             return (
-                <div className='no-spots-link'>
-                    <NavLink to='/spots/create'>Create a New Spot</NavLink>
-                </div>
+                <>
+                    <h1>Manage Spots</h1>
+                    <div className='no-spots-link'>
+                        <NavLink to='/spots/create'>Create a New Spot</NavLink>
+                    </div>
+                </>
             );
         } else {
             return (

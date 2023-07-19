@@ -1,0 +1,68 @@
+.update-booking-modal {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.update-booking-modal h2 {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 28pt;
+}
+
+.update-booking-modal.small-button {
+    margin: 0;
+}
+
+.update-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    border: 2px solid #ff3131;
+    border-radius: 3px;
+    background-color: #ff3131;
+    color: white;
+    padding: 6px 20px;
+    font-size: 14pt;
+    cursor: pointer;
+}
+
+.update-button:hover {
+    background-color: white;
+    color: #ff3131;
+    border-radius: 2px;
+}
+
+.update-date-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    margin-bottom: 15px;
+}
+
+.update-date {
+    padding: 8px;
+    padding-left: 13px;
+}
+
+#update-date-left {
+    border-right: 1px solid lightgray;
+}
+
+.update-date input {
+    width: 100%;
+    border: none;
+    font-family: 'Lato', sans-serif;
+    font-size: 12pt;
+}
+
+.update-date-check {
+    font-size: 10pt;
+    font-weight: bold;
+}

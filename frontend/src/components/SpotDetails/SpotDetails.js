@@ -1,18 +1,25 @@
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import { thunkGetSpot } from '../../store/spots';
 import OpenModalButton from '../OpenModalButton';
 import './SpotDetails.css';
 import CreateReview from '../CreateReviewModal';
-import { thunkGetSpotReviews, thunkDeleteReview } from '../../store/reviews';
+import { thunkGetSpotReviews } from '../../store/reviews';
 import DeleteReviewModal from '../DeleteModal/DeleteReview';
+import { thunkBookSpot } from '../../store/bookings';
+
 
 function SpotDetails() {
     const dispatch = useDispatch();
     const history = useHistory();
     const { spotId } = useParams();
-    const [spotReviews, setSpotReviews] = useState({})
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const [bookingError, setBookingError] = useState("");
 
     const reviewsObj = useSelector(state=>state.reviews.spot);
     const reviews = Object.values(reviewsObj)
@@ -20,24 +27,16 @@ function SpotDetails() {
     useEffect(() => {
         dispatch(thunkGetSpot(spotId))
         dispatch(thunkGetSpotReviews(spotId))
-
-        // const fetchSpot = async () => {
-        //     await dispatch(thunkGetSpot(spotId))
-        // }
-        // const fetchReview = async () => {
-        //     await dispatch(thunkGetSpotReviews(spotId))
-        // }
-        // fetchSpot()
-        // fetchReview()
     }, [dispatch])
+
+    useEffect(() => {
+        setEndDate(startDate)
+    }, [startDate])
 
     const spotsObj = useSelector(state=>state.spots)
     const spot = spotsObj.singleSpot
 
     const user = useSelector(state=>state.session.user)
-    // console.log("user: ", user)
-    // console.log("user firstName: ", user.firstName)
-
 
     if (!spot.SpotImages) return null;
     const images = Object.values(spot.SpotImages)
@@ -86,7 +85,22 @@ function SpotDetails() {
     }
 
     const handleReserve = () => {
-        alert('Feature coming soon!')
+        if (user.id === spot.ownerId) {
+            alert('You cannot make reservations on your own spot')
+        } else if (!user) {
+            alert('You must be logged in book a reservation.')
+        } else {
+            console.log(startDate, endDate)
+            dispatch(thunkBookSpot(spot.id, startDate, endDate))
+                .then((res) => {
+                    if (res && res.errors) {
+                        console.log(res.errors.message)
+                        setBookingError(res.message)
+                    } else {
+                        history.push("/bookings/current") //add manage bookings
+                    }
+                })
+        }
     }
 
     const handleReviewName = (review) => {
@@ -135,13 +149,14 @@ function SpotDetails() {
                 <div id='location'>{spot.city}, {spot.state}</div>
                 <div className='image-container'>
                     <div className='preview-image'>
-                        {images.map((img) => {
+                        {/* {images.map((img) => {
                             if (img.preview === true) {
                                 return (
                                     <img src={img.url}/>
                                 )
                             }
-                        })}
+                        })} */}
+                        <img src={images[0].url}/>
                     </div>
                     <div className="other-images">
                         {images.length <= 1 ? "" :
@@ -163,14 +178,32 @@ function SpotDetails() {
                 </div>
                 <div className='reserve-box'>
                     <div className='reserve-top'>
-                        <div className='reserve-price'><span>${spot.price}</span> night</div>
+                        <div className='reserve-price'><span className='spot-price'>${spot.price}</span> night</div>
                         <div className='reserve-top-right'>
                             <i className="fa-solid fa-star"></i>
                             {reviews.length === 0 ? "New" : `${spot.avgStarRating ? spot.avgStarRating.toFixed(1) : ""} · ${reviews.length} ${reviews.length === 1 ? "review" : "reviews"}`}
                         </div>
                     </div>
-                    <button className='reserve-button'>
-                        <div onClick={() => handleReserve()}>Reserve</div>
+                    <div className='date-box'>
+                        <div className='date' id='date-left'>
+                            <div className='date-check'>CHECK-IN</div>
+                            <DatePicker
+                            selected={startDate}
+                            onChange={date => setStartDate(date)}
+                            dateFormat="MM/dd/yyyy"
+                            />
+                        </div>
+                        <div className='date'>
+                            <div className='date-check'>CHECKOUT</div>
+                            <DatePicker
+                            selected={endDate}
+                            onChange={date => setEndDate(date)}
+                            dateFormat="MM/dd/yyyy"
+                            />
+                        </div>
+                    </div>
+                    <button className='reserve-button' onClick={() => handleReserve()}>
+                        <div>Reserve</div>
                     </button>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import './Navigation.css'
+import Logo from './Logo.png';
 
 function HomeButton() {
     const history = useHistory();
@@ -11,8 +12,7 @@ function HomeButton() {
 
     return (
         <button onClick={returnHome} className="navButton" id='homeButton'>
-            <i className="fa-solid fa-ghost"></i>
-            <div>CloneBnb</div>
+            <img src={Logo} alt="CloneBnb Logo" />
         </button>
     )
 };

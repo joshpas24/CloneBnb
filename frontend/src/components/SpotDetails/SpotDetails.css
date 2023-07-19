@@ -1,5 +1,5 @@
 .spot-details {
-    width: 70%;
+    width: 75%;
     margin: 50px auto;
     display: flex;
     flex-direction: column;
@@ -18,14 +18,16 @@
 }
 
 .spot-mid {
-    display: flex;
+    /* display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-between; */
+    display: grid;
+    grid-template-columns: 2fr 1fr;
     align-items: flex-start;
     padding: 20px 0px;
     padding-bottom: 30px;
-    /* width: 90%; */
-    gap: 15px;
+    width: fit-content;
+    gap: 40px;
     padding-top: 0;
     border-bottom: 2px solid lightgray;
 }
@@ -95,24 +97,27 @@
 }
 
 .reserve-box {
-    width: 35%;
-    padding: 8px;
+    width: auto;
+    padding: 10px;
     border: 2px solid lightgray;
     border-radius: 5px;
+    gap: 15px;
 }
 
 .reserve-top {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 15px;
-    padding-bottom: 25px;
+    padding: 15px 10px;
+    /* padding-bottom: 25px; */
+    font-size: 12pt;
 }
 
 .reserve-top-right {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    gap: 3px;
 }
 
 .reserve-price {
@@ -121,9 +126,39 @@
     gap: 3px;
 }
 
-.reserve-top span {
-    font-size: 16pt;
-    text-decoration: bold;
+.spot-price {
+    font-size: 12pt;
+    text-decoration: bold !important;
+}
+
+.date-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    margin-bottom: 15px;
+}
+
+.date {
+    padding: 5px;
+    padding-left: 10px;
+}
+
+#date-left {
+    border-right: 1px solid lightgray;
+}
+
+.date input {
+    width: 100%;
+    border: none;
+    font-family: 'Lato', sans-serif;
+    font-size: 11pt;
+}
+
+.date-check {
+    font-size: 8pt;
+    font-weight: bold;
 }
 
 .reserve-button {
@@ -132,9 +167,9 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    border: 2px solid rgba(203, 0, 0, 0.8);
+    border: 2px solid #ff3131;
     border-radius: 5px;
-    background-color: rgba(203, 0, 0, 0.8);
+    background-color: #ff3131;
     color: white;
     padding: 10px 20px;
     font-size: 14pt;
@@ -149,9 +184,9 @@
 }
 
 .reserve-button:hover {
-    border: 2px solid rgba(203, 0, 0, 0.8);
+    border: 2px solid #ff3131;
     background-color: white;
-    color: rgba(203, 0, 0, 0.8);
+    color: #ff3131;
     border-radius: 5px;
 }
 

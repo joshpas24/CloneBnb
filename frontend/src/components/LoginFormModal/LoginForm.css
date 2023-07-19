@@ -24,7 +24,7 @@ input {
 
 .loginDiv {
     padding: 20px;
-    padding-bottom: 30px;
+    /* padding-bottom: 30px; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,4 +32,26 @@ input {
 
 .loginButton {
     width: 40%;
+}
+
+.demo-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 30px;
+}
+
+.demo-login:hover {
+    text-decoration: underline;
+    color: darkblue;
+    font-size: bold;
+    cursor: pointer;
+}
+
+.login-error {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    font-size: 12pt;
+    padding-top: 8px;
 }

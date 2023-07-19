@@ -5,7 +5,7 @@ export const LOAD_SPOTS = "spots/getSpots";
 export const LOAD_SPOT = "spots/getSpot";
 export const CREATE_SPOT = "spots/createSpot";
 export const DELETE_SPOT = "spots/deleteSpot";
-export const UPDATE_SPOT = "spots/updateSpot"
+export const UPDATE_SPOT = "spots/updateSpot";
 
 //ACTION CREATORS
 export const getSpots = (spots) => {
@@ -73,6 +73,7 @@ export const thunkGetSpot = (spotId) => async (dispatch) => {
 }
 
 export const thunkCreateSpot = (spot, images) => async (dispatch) => {
+    console.log(images)
     try {
         const res = await csrfFetch("/api/spots", {
             method: "POST",

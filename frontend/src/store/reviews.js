@@ -89,7 +89,8 @@ export const thunkCreateReview = (review, spotId) => async (dispatch) => {
     })
     const data = await res.json();
     console.log("data from thunk: ", data)
-    dispatch(createReview(data))
+    // dispatch(createReview(data))
+    dispatch(thunkGetSpotReviews(spotId))
     return data;
 }
 

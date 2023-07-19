@@ -50,8 +50,8 @@ const validateReview = [
       .exists({ checkFalsy: true })
       .withMessage('Review text is required'),
     check('review')
-      .isLength({ min: 30 })
-      .withMessage('Description must be at least 30 characters'),
+      .isLength({ min: 10 })
+      .withMessage('Description must be at least 10 characters'),
     check('stars')
       .exists({ checkFalsy: true })
       .isInt({min: 1, max: 5})
@@ -563,6 +563,7 @@ router.get('/:id/bookings', requireAuth, async(req, res) => {
 
 //Create a booking by spotId
 router.post('/:id/bookings', requireAuth, async(req, res) => {
+    console.log("req body received: ", req.body)
     const spot = await Spot.findByPk(req.params.id);
 
     if (!spot) {

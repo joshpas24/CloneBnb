@@ -13,10 +13,11 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     size: 100px;
-    background-color: rgba(203, 0, 0, 1);
-    padding: 30px;
+    padding: 18px 50px;
     height: fit-content;
+    border-bottom: 2px solid rgb(227, 224, 224);
 };
 
 #homeButton {
@@ -32,30 +33,55 @@ body {
     flex-direction: row;
     align-items: center;
     gap: 5px;
-    border: 2px solid rgba(203, 0, 0, 0.8);
+    border: none;
     border-radius: 5px;
-    background-color: rgba(203, 0, 0, 0.8);
-    color: white;
+    background: none;
+    color: black;
     padding: 10px 20px;
-    font-size: 14pt;
+    font-size: 12pt;
     cursor: pointer;
 }
 
-.navButton:hover {
-    border: 2px solid white;
+.navButton img {
+    height: 35px;
+}
+
+.create-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    border: none;
     border-radius: 5px;
+    background: none;
+    color: black;
+    padding: 10px 20px;
+    font-size: 12pt;
+    cursor: pointer;
+}
+
+.create-button:hover {
+    text-decoration: underline;
+    color: #ff3131;
 }
 
 .navButton:active {
     background-color: white;
-    color:rgba(203, 0, 0, 0.8)
+    color: #ff3131;
+}
+
+.navButton:hover {
+    background-color: white;
+    text-decoration: underline;
+    color: #ff3131;
 }
 
 .navRight {
     display: flex;
     gap: 12px;
+    padding-right: 20px;
 }
 
-.navLeft {
+/* .navLeft {
     font-size: 24pt;
-}
+} */

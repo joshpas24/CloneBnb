@@ -20,17 +20,19 @@ export const removeUser = () => {
 
 //THUNK
 export const login = (user) => async (dispatch) => {
-const { credential, password } = user;
+  const { credential, password } = user;
   const response = await csrfFetch("/api/session", {
     method: "POST",
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
       credential,
       password,
     }),
   });
   const data = await response.json();
+  // console.log("data from thunk: ", response)
   dispatch(setUser(data.user));
-  return response;
+  return response
 }
 
 export const restoreUser = () => async (dispatch) => {

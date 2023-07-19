@@ -3,11 +3,13 @@
 import React, { useState, useEffect } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom';
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState(true)
@@ -23,15 +25,24 @@ function LoginFormModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
-    return dispatch(sessionActions.login({ credential, password }))
+    // console.log(credential, password)
+    dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
+      .catch(async (data) => {
+        const err = await data.json();
+        console.log("data received from thunk: ", err)
+        if (err.errors) {
+          setErrors(err.errors)
         }
-      });
+      })
+
   };
+
+  const handleDemo = (e) => {
+    e.preventDefault();
+    return dispatch(sessionActions.login({ credential: "Demo-lition", password: "password" }))
+      .then(closeModal)
+  }
 
   return (
     <>
@@ -57,13 +68,16 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.credential && (
-          <p>{errors.credential}</p>
+        {errors.message && (
+          <p className='login-error'>{errors.message}</p>
         )}
         <div className="loginDiv">
           <button type="submit" className="loginButton" disabled={disabled}>Log In</button>
         </div>
       </form>
+      <div className="demo-login" onClick={(e) => {handleDemo(e)}}>
+        Login as Demo User
+      </div>
     </>
   );
 }

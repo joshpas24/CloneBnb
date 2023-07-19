@@ -8,7 +8,7 @@ h1 {
     margin: 0 auto;
     padding: 20px 0;
     width: 45%;
-    border-bottom: 2px solid lightgray;
+    border-bottom: 2px solid #ff3131;
     gap: none;
 }
 
@@ -95,7 +95,7 @@ textarea {
     gap: 5px;
     border: 2px solid white;
     border-radius: 5px;
-    background-color: rgba(203, 0, 0, 0.8);
+    background-color: #ff3131;
     color: white;
     padding: 10px 20px;
     font-size: 14pt;
@@ -103,8 +103,8 @@ textarea {
 }
 
 .create-spot-button:hover {
-    border: 2px solid rgba(203, 0, 0, 0.8);
-    color: rgba(203, 0, 0, 0.8);
+    border: 2px solid #ff3131;
+    color: #ff3131;
     background-color: white;
     border-radius: 5px;
 }

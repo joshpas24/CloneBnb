@@ -15,7 +15,8 @@ const CreateReview = ({ spotId }) => {
     const { closeModal } = useModal();
 
     useEffect(() => {
-        if (review.length >= 10) {
+        console.log(review.length)
+        if (review.length >= 10 && stars !== 0) {
             setDisabled(false)
         }
     }, [review])
@@ -48,7 +49,7 @@ const CreateReview = ({ spotId }) => {
                 console.log("res received from thunk: ", res)
                 if (res.errors) {
                     // console.log(res.errors)
-                    setErrors("errors from create review thunk: ",res.errors)
+                    setErrors(res.errors)
                 } else {
                     history.push(`/spots/${spotId}`)
                 }
@@ -65,10 +66,10 @@ const CreateReview = ({ spotId }) => {
         <div className='review-modal'>
             <h2>How was your stay?</h2>
             <form onSubmit={(e) => handleSubmit(e)} className='review-form'>
-                {errors.review && <p>{errors.review}</p>}
                 <textarea placeholder='Leave your review here...'
                     onChange={(e) => handleReview(e)}
-                />
+                    />
+                {errors.review && <p>{errors.review}</p>}
                 <div className='rating-input'>
                     <div className={stars >= 1 ? 'filled' : 'empty'}
                         onClick={() => setStars(1)}

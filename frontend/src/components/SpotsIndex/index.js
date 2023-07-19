@@ -39,7 +39,7 @@ const SpotsIndex = () => {
                             </div>
                         </div>
                         <div className='spotInfoBottom'>
-                            {`$${spot.price} night`}
+                            {`$${spot.price.toLocaleString()} night`}
                         </div>
                     </div>
                 </div>
