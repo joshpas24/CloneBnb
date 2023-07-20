@@ -55,8 +55,8 @@
 
 .profile-dropdown button:hover {
     background-color: white;
-    color: rgba(203, 0, 0, 1);
-    border: 1px solid rgba(203, 0, 0, 1)
+    color: #ff3131;
+    border: 1px solid #ff3131
 }
 
 .newSpot {

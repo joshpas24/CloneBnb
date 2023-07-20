@@ -85,10 +85,10 @@ function SpotDetails() {
     }
 
     const handleReserve = () => {
-        if (user.id === spot.ownerId) {
-            alert('You cannot make reservations on your own spot')
-        } else if (!user) {
+        if (!user) {
             alert('You must be logged in book a reservation.')
+        } else if (user.id === spot.ownerId) {
+            alert('You cannot make reservations on your own spot.')
         } else {
             console.log(startDate, endDate)
             dispatch(thunkBookSpot(spot.id, startDate, endDate))
