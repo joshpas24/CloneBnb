@@ -4,7 +4,12 @@ form {
     gap: 15px;
     padding: 10px 30px;
     font-family: 'Lato', sans-serif;
+    width: 300px;
 }
+
+/* .modal-form {
+    width: 200px;
+} */
 
 .title {
     display: flex;

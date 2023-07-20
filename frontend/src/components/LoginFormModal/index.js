@@ -47,7 +47,7 @@ function LoginFormModal() {
       <h1 className="logo">
         <i className="fa-solid fa-ghost"></i>
       </h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="modal-form">
         <label>
           Username or Email
           <input
