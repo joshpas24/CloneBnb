@@ -135,7 +135,7 @@ const CreateSpotForm = () => {
             </section>
             <section>
                 <h2>Describe your place to guests</h2>
-                <h3>Mention the best features of your space, any special amentities like fast wif or parking, and what you love about the neighborhood.</h3>
+                <h3>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.</h3>
                 <textarea
                     placeholder="Please write at least 30 characters"
                     value={description}

@@ -31,8 +31,12 @@ section input {
     width: 95%
 }
 
+label input {
+    width: auto;
+}
+
 section textarea {
-    width: 95%;
+    width: 96%;
     height: 70px;
 }
 
