@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { thunkCreateReview } from '../../store/reviews';
 import { useModal } from "../../context/Modal";
 import './CreateReviewModal.css'
+import { thunkGetSpot } from '../../store/spots';
 
 const CreateReview = ({ spotId }) => {
     const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const CreateReview = ({ spotId }) => {
     const { closeModal } = useModal();
 
     useEffect(() => {
-        console.log(review.length)
+        console.log("from useEffect: ", review.length)
         if (review.length >= 10 && stars !== 0) {
             setDisabled(false)
         }
@@ -45,10 +46,11 @@ const CreateReview = ({ spotId }) => {
 
         dispatch(thunkCreateReview(newReview, spotId))
             .then((res) => {
-                console.log("res received from thunk: ", res)
+                // console.log("res received from thunk: ", res)
                 if (res.errors) {
                     setErrors(res.errors)
                 } else {
+                    dispatch(thunkGetSpot(spotId))
                     history.push(`/spots/${spotId}`)
                 }
             }).then(closeModal)

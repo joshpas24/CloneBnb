@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { useModal } from "../../context/Modal";
 import './DeleteModal.css';
 import { thunkDeleteReview } from '../../store/reviews';
+import { thunkGetSpot } from '../../store/spots';
 
 
 const DeleteReviewModal = ({ review, spotId }) => {
@@ -12,6 +13,7 @@ const DeleteReviewModal = ({ review, spotId }) => {
 
     const handleDelete = () => {
         dispatch(thunkDeleteReview(review))
+            .then(dispatch(thunkGetSpot(spotId)))
             .then(closeModal)
         history.push(`/spots/${spotId}`)
     }

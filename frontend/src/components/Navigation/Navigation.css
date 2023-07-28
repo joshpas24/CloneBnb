@@ -72,7 +72,7 @@ body {
 
 .navButton:hover {
     background-color: white;
-    text-decoration: underline;
+    /* text-decoration: underline; */
     color: #ff3131;
 }
 

@@ -3,8 +3,6 @@
     font-family: 'Lato', sans-serif;
 }
 
-
-
 .profile-dropdown {
     list-style-type: none;
     padding: 10px 0;
@@ -56,7 +54,8 @@
 .profile-dropdown button:hover {
     background-color: white;
     color: #ff3131;
-    border: 1px solid #ff3131
+    border: 1px solid #ff3131;
+    text-decoration: none;
 }
 
 .newSpot {
@@ -77,4 +76,8 @@
     border: 2px solid white;
     border-radius: 5px;
     /* text-decoration: underline white; */
+}
+
+.create-button:hover {
+    text-decoration: underline;
 }
