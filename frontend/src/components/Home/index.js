@@ -22,7 +22,9 @@ const HomePage = () => {
     return (
         <>
             <div className='home-header'>
-                <div>Filter</div>
+                <div>
+                    Filter
+                </div>
                 <div className='view-toggle'>
                     <button onClick={() => setView('map')} id='view-toggle-left' className={view === 'map' ? 'active-view' : 'non-active-view'}>
                         <i class="fa-regular fa-map"></i>
@@ -36,7 +38,9 @@ const HomePage = () => {
                         </div>
                     </button>
                 </div>
-                <div>Sort</div>
+                <div>
+                    Sort
+                </div>
             </div>
             {handleView()}
         </>

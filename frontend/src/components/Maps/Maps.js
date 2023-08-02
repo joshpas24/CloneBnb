@@ -1,11 +1,13 @@
 import React from 'react';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { useSelector } from 'react-redux';
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import './Maps.css'
 
 const containerStyle = {
   // padding: '30px 70px',
   width: 'auto',
   height: '560px',
+  zIndex: '0'
 };
 
 const center = {
@@ -14,6 +16,10 @@ const center = {
 };
 
 const Maps = ({ apiKey }) => {
+
+  const spotsObj = useSelector(state=>state.spots.allSpots);
+  const spots = Object.values(spotsObj)
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: apiKey,
@@ -26,7 +32,19 @@ const Maps = ({ apiKey }) => {
           mapContainerStyle={containerStyle}
           center={center}
           zoom={9}
-        />
+        >
+          {spots.map((spot) => (
+            <Marker
+              key={spot.id}
+              position={{lat: spot.lat, lng: spot.lng}}
+              title={spot.name}
+              icon={{
+                url: "CloneBnb_2/Icon.png",
+                scaledSize: new window.google.maps.Size(38, 40)
+              }}
+            />
+          ))}
+        </GoogleMap>
       )}
     </div>
   );

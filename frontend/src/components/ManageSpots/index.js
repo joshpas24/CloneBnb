@@ -14,7 +14,7 @@ const ManageSpots = () => {
     const spotsObj = useSelector(state=>state.spots);
     const spotsArr = Object.values(spotsObj.allSpots);
     const spots = [];
-    
+
     spotsArr.forEach(spot => {
         if (!user) {
             return;
@@ -44,7 +44,7 @@ const ManageSpots = () => {
         if (!spots.length) {
             return (
                 <>
-                    <h1>Manage Spots</h1>
+                    {/* <h1>Manage Spots</h1> */}
                     <div className='no-spots-link'>
                         <NavLink to='/spots/create'>Create a New Spot</NavLink>
                     </div>
@@ -53,8 +53,8 @@ const ManageSpots = () => {
         } else {
             return (
                 <>
-                    <h1>Manage Spots</h1>
-                    <div className='spotsGrid'>
+                    {/* <h1>Manage Spots</h1> */}
+                    <div className='manage-spotsGrid'>
                         {spots.map((spot) => (
                             <div>
                                 <div className='spotBox' onClick={() => getDetails(spot.id)}>

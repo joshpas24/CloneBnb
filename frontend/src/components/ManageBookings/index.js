@@ -112,7 +112,7 @@ const ManageBookings = () => {
 
     return (
         <>
-            <h1>Manage Bookings</h1>
+            {/* <h1>Manage Bookings</h1> */}
             <div className='bookings-list'>
                 {bookings.map((booking) => (
                     <div className='booking-box'>

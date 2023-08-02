@@ -51,26 +51,33 @@ function ProfileButton({ user }) {
     history.push("/bookings/current")
   }
 
+  const manageAccount = () => {
+    history.push("/manage")
+  }
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
     <div className="navRight">
       <div className="create-button" id='create-button' onClick={() => createSpot()}>Create New Spot</div>
       <div className="dropdown-container">
-        <button onClick={openMenu} className="navButton">
+        <button onClick={openMenu} className="navButton" id="profile-button">
           {!showMenu ? <i class="fa-solid fa-caret-down"></i> : <i class="fa-solid fa-caret-up"></i>}
           <i class="fa-solid fa-user"></i>
         </button>
         <ul className={ulClassName} ref={ulRef}>
           <li>Hello, {user.username}!</li>
           <li className="dropdown-email">{user.email}</li>
-          <li className="manage-profile" onClick={() => manageSpots()}>
+          {/* <li className="manage-profile" onClick={() => manageSpots()}>
             Manage Spots
           </li>
           <li className="manage-profile" onClick={() => manageBookings()}>
             Manage Bookings
+          </li> */}
+          <li className="manage-profile" onClick={() => manageAccount()} id="manage">
+            Manage Account
           </li>
-          <li>
+          <li className="logout">
             <button onClick={logout}>Log Out</button>
           </li>
         </ul>
