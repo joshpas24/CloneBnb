@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { thunkCreateSpot } from "../../store/spots";
 import './SpotForm.css'
+import FileImageUpload from "./Images/FileImageUpload";
+import LinkImageUpload from "./Images/LinkImageUpload";
 
 const CreateSpotForm = () => {
     const dispatch = useDispatch();
@@ -17,6 +19,9 @@ const CreateSpotForm = () => {
     const [name, setName] = useState();
     const [price, setPrice] = useState();
     const [images, setImages] = useState([]);
+    const [files, setFiles] = useState([]);
+    const [buffer, setBuffer] = useState(false)
+    const [imageType, setImageType] = useState('')
     const [preview, setPreview] = useState(0);
     const [errors, setErrors] = useState({});
 
@@ -34,16 +39,27 @@ const CreateSpotForm = () => {
             price
         };
 
-        dispatch(thunkCreateSpot(spot, images))
-            .then((res) => {
-                if (res.errors) {
-                    setErrors(res.errors)
-                } else {
-                    history.push(`/spots/${res.id}`)
-                }
-            })
+        if (images.length > files.length) {
+            dispatch(thunkCreateSpot(spot, images, buffer))
+                .then((res) => {
+                    if (res.errors) {
+                        setErrors(res.errors)
+                    } else {
+                        history.push(`/spots/${res.id}`)
+                    }
+                })
+        }
 
-
+        if (files.length > images.length) {
+            dispatch(thunkCreateSpot(spot, files, buffer, preview))
+                .then((res) => {
+                    if (res.errors) {
+                        setErrors(res.errors)
+                    } else {
+                        history.push(`/spots/${res.id}`)
+                    }
+                })
+        }
 
     };
 
@@ -61,11 +77,118 @@ const CreateSpotForm = () => {
         setImages(newImgArr)
     };
 
+    const handleFileInputChange = (e) => {
+        setFiles([...e.target.files]);
+        setPreview(0)
+      };
+
     useEffect(() => {
         if (images[preview]) {
             images[preview].preview = true
         }
     }, [preview])
+
+    useEffect(() => {
+        // console.log("files: ", files)
+        if (files.length) {
+            setBuffer(true)
+        }
+    }, [files]);
+
+    const handleDeleteImage = (index) => {
+        const updatedFiles = files.filter((_, i) => i !== index);
+        setFiles(updatedFiles);
+        // if (index === 0)
+        setPreview(0); // Reset selected image after deletion
+    };
+
+    const handlePreview = (index) => {
+        setPreview(index);
+    };
+
+    const handleImage = () => {
+        if (imageType === 'file') {
+            return (
+                <div className="file-input">
+                    <input type='file' accept="image/png, image/jpeg" onChange={handleFileInputChange} multiple />
+                    <div className="image-previews">
+                        {files.map((file, index) => (
+                            <div key={index} className={`file-image ${preview === index ? 'selected' : ''}`}>
+                                <img src={URL.createObjectURL(file)} alt={`Image ${index}`} />
+                                <button className="delete-button" onClick={() => handleDeleteImage(index)}>x</button>
+                                <div className="select-overlay" onClick={() => handlePreview(index)}></div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )
+        } else if (imageType === 'link') {
+            return (
+                <div className="link-input">
+                    <div className="image-entry">
+                        <input
+                            type="checkbox"
+                            checked={preview === 0}
+                            onClick={() => setPreview(0)}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Preview Image URL"
+                            onChange={(e) => addImage(e)}
+                        />
+                    </div>
+                    <div className="image-entry">
+                        <input
+                            type="checkbox"
+                            checked={preview === 1}
+                            onClick={() => setPreview(1)}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Image URL"
+                            onChange={(e) => addImage(e)}
+                        />
+                    </div>
+                    <div className="image-entry">
+                        <input
+                            type="checkbox"
+                            checked={preview === 2}
+                            onClick={() => setPreview(2)}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Image URL"
+                            onChange={(e) => addImage(e)}
+                        />
+                    </div>
+                    <div className="image-entry">
+                        <input
+                            type="checkbox"
+                            checked={preview === 3}
+                            onClick={() => setPreview(3)}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Image URL"
+                            onChange={(e) => addImage(e)}
+                        />
+                    </div>
+                    <div className="image-entry">
+                        <input
+                            type="checkbox"
+                            checked={preview === 4}
+                            onClick={() => setPreview(4)}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Image URL"
+                            onChange={(e) => addImage(e)}
+                        />
+                    </div>
+                </div>
+            )
+        }
+    }
 
     return (
         <>
@@ -167,67 +290,18 @@ const CreateSpotForm = () => {
             </section>
             <section className="add-images">
                 <h2>Liven up your spot with photos</h2>
-                <h3>Submit a link to at least one photo to publish your spot. If adding multiple images, please select one to be your spot's preview image.</h3>
-                <div className="image-entry">
-                    <input
-                        type="checkbox"
-                        checked={preview === 0}
-                        onClick={() => setPreview(0)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Preview Image URL"
-                        onChange={(e) => addImage(e)}
-                    />
+                <h3>Submit a file or link to at least one photo to publish your spot. If adding multiple images, please select one to be your spot's preview image.</h3>
+                <div className="image-type">
+                    <div className="image-radio">
+                        <input type="radio" id="file" name="imageType" onClick={() => setImageType('file')}/>
+                        <div>File</div>
+                    </div>
+                    <div className="image-radio">
+                        <input type="radio" id="link" name="imageType" onClick={() => setImageType('link')}/>
+                        <div>Link</div>
+                    </div>
                 </div>
-                <div className="image-entry">
-                    <input
-                        type="checkbox"
-                        checked={preview === 1}
-                        onClick={() => setPreview(1)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Image URL"
-                        onChange={(e) => addImage(e)}
-                    />
-                </div>
-                <div className="image-entry">
-                    <input
-                        type="checkbox"
-                        checked={preview === 2}
-                        onClick={() => setPreview(2)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Image URL"
-                        onChange={(e) => addImage(e)}
-                    />
-                </div>
-                <div className="image-entry">
-                    <input
-                        type="checkbox"
-                        checked={preview === 3}
-                        onClick={() => setPreview(3)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Image URL"
-                        onChange={(e) => addImage(e)}
-                    />
-                </div>
-                <div className="image-entry">
-                    <input
-                        type="checkbox"
-                        checked={preview === 4}
-                        onClick={() => setPreview(4)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Image URL"
-                        onChange={(e) => addImage(e)}
-                    />
-                </div>
+                {handleImage()}
             </section>
             <div className="form-bottom-div">
                 <button

@@ -72,7 +72,7 @@ export const thunkGetSpot = (spotId) => async (dispatch) => {
     }
 }
 
-export const thunkCreateSpot = (spot, images) => async (dispatch) => {
+export const thunkCreateSpot = (spot, images, buffer) => async (dispatch) => {
     console.log(images)
     try {
         const res = await csrfFetch("/api/spots", {
@@ -84,7 +84,7 @@ export const thunkCreateSpot = (spot, images) => async (dispatch) => {
         const data = await res.json();
 
         console.log("data from create thunk: ", data)
-        dispatch(thunkAddImageToSpot(data, images))
+        dispatch(thunkAddImageToSpot(data, images, buffer))
 
         return data
 
@@ -92,18 +92,34 @@ export const thunkCreateSpot = (spot, images) => async (dispatch) => {
         const errors = await error.json()
         return errors
     }
-
-
 }
 
-export const thunkAddImageToSpot = (spot, images) => async (dispatch) => {
-    images.forEach( async (image) => {
-        const res = await csrfFetch(`/api/spots/${spot.id}/images`, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(image)
+export const thunkAddImageToSpot = (spot, images, buffer) => async (dispatch) => {
+    console.log("images arg received from dispatch: ", images)
+
+
+    if (buffer) {
+        images.forEach((image) => {
+            console.log("image sent to backend: ",image)
+            const formData = new FormData();
+            formData.append("image", image)
+
+            csrfFetch(`/api/spots/${spot.id}/aws`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: formData
+            })
         })
-    })
+    } else {
+        images.forEach( async (image) => {
+            const res = await csrfFetch(`/api/spots/${spot.id}/images`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(image)
+            })
+        })
+    }
+
     dispatch(createSpot(spot))
 }
 

@@ -7,6 +7,8 @@ const { handleValidationErrors } = require('../../utils/validation')
 
 const router = express.Router();
 
+
+
 //Delete spot image by image id
 router.delete('/:id', requireAuth, async(req, res) => {
     const image = await SpotImage.findByPk(req.params.id);

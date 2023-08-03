@@ -79,11 +79,112 @@ textarea {
     gap: 10px
 }
 
+.image-type {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 95%;
+}
+
+.image-radio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: none;
+    padding-bottom: 20px;
+}
+
+.link-input {
+    gap: 10px;
+}
+
+.file-input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+}
+
+.file-input input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+}
+
+#file-upload-button {
+    margin: 0;
+}
+
+#file {
+    margin: 0;
+}
+
+#link {
+    margin: 0;
+}
+
+.image-radio label {
+    padding: none !important;
+}
+
+.image-previews {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    /* object-fit: cover; */
+    gap: 10px;
+}
+
+.file-image {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    border-radius: 5px;
+}
+
+.file-image img {
+    width: 100%;
+    height: 100%;
+    border: 4px solid transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.file-image.selected img {
+    border-color: green;
+}
+
+.delete-button {
+    position: absolute;
+    top: 8px;
+    right: 1px;
+    background-color: darkgray;
+    border-radius: 50px;
+    color: white;
+    border: none;
+    align-items: center;
+    cursor: pointer;
+}
+
+.select-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 105%;
+    height: 120px;
+    z-index: 3;
+    cursor: pointer;
+}
+
 .image-entry {
     display: grid;
-    grid-template-columns: 20px 1fr;
-    gap: 10px;
-    padding-top: 15px;
+    grid-template-columns: 1fr 15fr;
+    padding-bottom: 10px;
 }
 
 .form-bottom-div {

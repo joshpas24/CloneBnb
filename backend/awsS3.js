@@ -3,31 +3,79 @@ const multer = require("multer");
 const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 const NAME_OF_BUCKET = "jp-clonebnb"; // <-- Use your bucket name here
 
-const singleFileUpload = async ({ file, public = false }) => {
-    const { originalname, buffer } = file;
-    const path = require("path");
 
-    // Set the name of the file in your S3 bucket to the date in ms plus the
-    // extension name.
-    const Key = new Date().getTime().toString() + path.extname(originalname);
-    const uploadParams = {
-      Bucket: NAME_OF_BUCKET,
-      Key: public ? `public/${Key}` : Key,
-      Body: buffer
-    };
-    const result = await s3.upload(uploadParams).promise();
+//------------------------Public Upload-------------------------------------
 
-    // Return the link if public. If private, return the name of the file in your
-    // S3 bucket as the key in your database for subsequent retrieval.
-    return public ? result.Location : result.Key;
+const singlePublicFileUpload = async (file) => {
+    const imageFile = await file;
+    console.log("imageFile: ", imageFile)
+	const { originalname, buffer } = await file;
+	const path = require("path");
+	// name of the file in your S3 bucket will be the date in ms plus the extension name
+	const Key = new Date().getTime().toString() + path.extname(originalname);
+	const uploadParams = {
+		Bucket: NAME_OF_BUCKET,
+		Key,
+		Body: buffer,
+		ACL: "public-read",
+	};
+	const result = await s3.upload(uploadParams).promise();
+
+	// save the name of the file in your bucket as the key in your database to retrieve for later
+	return result.Location;
 };
 
-const multipleFilesUpload = async ({files, public = false}) => {
-    return await Promise.all(
-      files.map((file) => {
-        return singleFileUpload({file, public});
-      })
-    );
+const multiplePublicFileUpload = async (files) => {
+	return await Promise.all(
+		files.map((file) => {
+			return singlePublicFileUpload(file);
+		})
+	);
+};
+
+const extractKeyFromUrl = (fileUrl) => {
+	const parsedUrl = url.parse(fileUrl);
+	const key = path.basename(parsedUrl.pathname);
+
+	return key;
+};
+
+const singlePublicFileDelete = async (file) => {
+	const params = {
+		Bucket: NAME_OF_BUCKET,
+		Key: file,
+	};
+	try {
+		await s3.deleteObject(params).promise();
+	} catch (error) {
+		console.error(JSON.stringify(error));
+	}
+};
+
+//------------------------Private Upload-------------------------------------
+
+const singlePrivateFileUpload = async (file) => {
+	const { originalname, buffer } = await file;
+	const path = require("path");
+	// name of the file in your S3 bucket will be the date in ms plus the extension name
+	const Key = new Date().getTime().toString() + path.extname(originalname);
+	const uploadParams = {
+		Bucket: NAME_OF_BUCKET,
+		Key,
+		Body: buffer,
+	};
+	const result = await s3.upload(uploadParams).promise();
+
+	// save the name of the file in your bucket as the key in your database to retrieve for later
+	return result.Key;
+};
+
+const multiplePrivateFileUpload = async (files) => {
+	return await Promise.all(
+		files.map((file) => {
+			return singlePrivateFileUpload(file);
+		})
+	);
 };
 
 const retrievePrivateFile = (key) => {
@@ -41,22 +89,26 @@ const retrievePrivateFile = (key) => {
     return fileUrl || key;
 };
 
+//------------------------Storage-------------------------------------
+
 const storage = multer.memoryStorage({
     destination: function (req, file, callback) {
       callback(null, "");
     },
 });
 
-const singleMulterUpload = (nameOfKey) =>
-    multer({ storage: storage }).single(nameOfKey);
-const multipleMulterUpload = (nameOfKey) =>
-    multer({ storage: storage }).array(nameOfKey);
+const singleMulterUpload = (nameOfKey) => multer({ storage: storage }).single(nameOfKey);
+const multipleMulterUpload = (nameOfKey) => multer({ storage: storage }).array(nameOfKey);
 
 module.exports = {
-    s3,
-    singleFileUpload,
-    multipleFilesUpload,
-    retrievePrivateFile,
-    singleMulterUpload,
-    multipleMulterUpload
+	s3,
+	singlePublicFileUpload,
+	multiplePublicFileUpload,
+	singlePrivateFileUpload,
+	multiplePrivateFileUpload,
+	retrievePrivateFile,
+	singleMulterUpload,
+	singlePublicFileDelete,
+	extractKeyFromUrl,
+	multipleMulterUpload,
   };
