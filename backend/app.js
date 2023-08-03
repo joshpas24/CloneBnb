@@ -9,6 +9,10 @@ const routes = require('./routes');
 const { ValidationError } = require('sequelize');
 const bodyParser = require('body-parser')
 
+const { requireAuth } = require('./utils/auth');
+const { singleMulterUpload, singlePublicFileUpload } = require('./awsS3');
+const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('./db/models');
+
 const { environment } = require('./config');
 const isProduction = environment === 'production';
 
@@ -17,7 +21,7 @@ const app = express();
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(express.json({ limit: '10MB' }));
 // app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
 // app.use(bodyParser.json({limit: '50mb'}))
 

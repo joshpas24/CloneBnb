@@ -366,7 +366,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
 
 //Add aws image to spot by spotId
 router.post('/:id/aws', requireAuth, singleMulterUpload("image"), async (req, res) => {
-    console.log("req file from multer: ", req.file)
+    // console.log("req file from multer: ", req.file)
 
     const spot = await Spot.findByPk(req.params.id);
 
@@ -385,12 +385,12 @@ router.post('/:id/aws', requireAuth, singleMulterUpload("image"), async (req, re
     };
 
     const file = req.file
-    console.log("file: ", file)
+    // console.log("file: ", file)
     console.log("req: ", req.body)
     const url = singlePublicFileUpload(file);
     console.log("url from singleUpload: ", url)
 
-    const images = await SpotImages.findAll({
+    const images = await SpotImage.findAll({
         where: {
             spotId: req.params.id
         }
