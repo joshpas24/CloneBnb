@@ -102,11 +102,11 @@ export const thunkAddImageToSpot = (spot, images, buffer) => async (dispatch) =>
         images.forEach((image) => {
             console.log("image sent to backend: ",image)
             const formData = new FormData();
-            formData.append("image", image)
+            formData.append("image", image);
 
             csrfFetch(`/api/spots/${spot.id}/aws`, {
                 method: "POST",
-                headers: {"Content-Type": "application/json"},
+                // headers: {"Content-Type": "multipart/form-data"},
                 body: formData
             })
         })
