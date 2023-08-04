@@ -5,13 +5,13 @@ import "./ManageProfile.css"
 
 
 const ManageAccount = () => {
-    const [view, setView] = useState('spots')
+    const [view, setView] = useState('bookings')
     // const [activePage, setActivePage] = useState()
 
     return (
         <div className="manage-container">
             <div className="profile-nav">
-                <li className={view === 'profile' ? 'activePage' : null}>
+                <li className={view === 'profile' ? 'activePage' : null} onClick={() => alert('Feature coming soon!')}>
                     <div >Profile</div>
                 </li>
                 <li className={view === 'spots' ? 'activePage' : null} onClick={() => setView('spots')}>

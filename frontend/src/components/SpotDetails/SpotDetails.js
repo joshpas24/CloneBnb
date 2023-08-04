@@ -97,7 +97,7 @@ function SpotDetails() {
                         console.log(res.errors.message)
                         setBookingError(res.message)
                     } else {
-                        history.push("/bookings/current") //add manage bookings
+                        history.push("/manage") //add manage bookings
                     }
                 })
         }
