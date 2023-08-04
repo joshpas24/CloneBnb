@@ -21,7 +21,7 @@ const app = express();
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json({ limit: '10MB' }));
+// app.use(express.json({ limit: '10MB' }));
 // app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
 // app.use(bodyParser.json({limit: '50mb'}))
 

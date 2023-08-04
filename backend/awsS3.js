@@ -97,14 +97,16 @@ const storage = multer.memoryStorage({
     },
 });
 
-const singleMulterUpload = (nameOfKey) => {
-    console.log("NAME OF KEY IN MULTER", nameOfKey)
+const singleMulterUpload = (nameOfKey) => multer({ storage: storage }).single(nameOfKey);
 
-    const res = multer({ storage: storage, limits: { fileSize: 50 * 1024 * 1024 } }).single(nameOfKey);
+// {
+//     console.log("NAME OF KEY IN MULTER", nameOfKey)
 
-    console.log("MULTER RES: ", res)
-    return res;
-}
+//     const res = multer({ storage: storage }).single(nameOfKey);
+
+//     console.log("MULTER RES: ", res)
+//     return res;
+// }
 
 const multipleMulterUpload = (nameOfKey) => multer({ storage: storage }).array(nameOfKey);
 

@@ -104,7 +104,7 @@ export const thunkAddImageToSpot = (spot, images, buffer) => async (dispatch) =>
             const formData = new FormData();
             formData.append("image", image);
 
-            csrfFetch(`/api/spots/${spot.id}/aws`, {
+            csrfFetch(`/api/upload/${spot.id}/aws`, {
                 method: "POST",
                 // headers: {"Content-Type": "multipart/form-data"},
                 body: formData

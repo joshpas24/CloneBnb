@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op, Sequelize, ValidationError } = require('sequelize');
 const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models');
-const { requireAuth } = require('../../utils/auth')
+const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { singleMulterUpload, singlePublicFileUpload } = require('../../awsS3');
