@@ -48,8 +48,6 @@ export const thunkGetSpotReviews = (spotId) => async (dispatch) => {
 
     if (res.ok) {
         const data = await res.json();
-        // data.User = user;
-        // console.log("data from reviews thunk: ", data.Reviews)
         dispatch(getSpotReviews(data.Reviews))
         return data;
     }
@@ -73,7 +71,6 @@ export const thunkDeleteReview = (review) => async (dispatch) => {
         headers: {"Content-Type": "application/json"}
     });
     const data = await res.json();
-    console.log("data from thunk: ", data)
 
     if (res.ok) {
         dispatch(deleteReview(review))
@@ -88,8 +85,7 @@ export const thunkCreateReview = (review, spotId) => async (dispatch) => {
         body: JSON.stringify(review)
     })
     const data = await res.json();
-    console.log("data from thunk: ", data)
-    // dispatch(createReview(data))
+    
     dispatch(thunkGetSpotReviews(spotId))
     return data;
 }

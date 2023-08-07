@@ -61,7 +61,6 @@ export const thunkGetUserBookings = () => async (dispatch) => {
 
     if (res.ok) {
         const data = await res.json();
-        console.log(data)
         dispatch(getUserBookings(data.Bookings))
     }
 }
@@ -73,7 +72,6 @@ export const thunkBookSpot = (spotId, startDate, endDate) => async (dispatch) =>
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({ startDate, endDate })
         });
-        console.log("res from thunk: ", res)
 
         if (res.ok) {
             const data = await res.json()
@@ -82,7 +80,6 @@ export const thunkBookSpot = (spotId, startDate, endDate) => async (dispatch) =>
         }
     } catch (error) {
         const data = await error.json();
-        console.log("error received in thunk: ", data)
         return data;
     }
 }
@@ -103,7 +100,6 @@ export const thunkUpdateBooking = (booking) => async (dispatch) => {
 
         return data;
     } catch (errors) {
-        console.log("error received in thunk: ", errors)
         const error = await errors.json();
         return error;
     }
@@ -141,7 +137,6 @@ export const bookingsReducer = (state = initialState, action) => {
         case ADD_SPOT_BOOKING:
             newState = { ...state, spot: { ...state.spot }, user: { ...state.user } }
             newState.spot[action.booking.id] = action.booking;
-            // newState.user[action.booking.id] = action.booking;
             return newState;
         case UPDATE_BOOKING:
             newState = { ...state, spot: { ...state.spot }, user: { ...state.user } }

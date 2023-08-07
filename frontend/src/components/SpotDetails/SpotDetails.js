@@ -26,7 +26,6 @@ function SpotDetails() {
     const reviews = Object.values(reviewsObj)
 
     const spot = useSelector(state=>state.spots.singleSpot)
-    // const spot = spotsObj.singleSpot
 
     const user = useSelector(state=>state.session.user)
 
@@ -94,7 +93,6 @@ function SpotDetails() {
             dispatch(thunkBookSpot(spot.id, startDate, endDate))
                 .then((res) => {
                     if (res && res.errors) {
-                        console.log(res.errors.message)
                         setBookingError(res.message)
                     } else {
                         history.push("/manage") //add manage bookings

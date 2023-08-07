@@ -16,11 +16,10 @@ const CreateReview = ({ spotId }) => {
     const { closeModal } = useModal();
 
     useEffect(() => {
-        console.log("from useEffect: ", review.length)
         if (review.length >= 10 && stars !== 0) {
             setDisabled(false)
         }
-    }, [review])
+    }, [review, stars])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -46,7 +45,6 @@ const CreateReview = ({ spotId }) => {
 
         dispatch(thunkCreateReview(newReview, spotId))
             .then((res) => {
-                // console.log("res received from thunk: ", res)
                 if (res.errors) {
                     setErrors(res.errors)
                 } else {

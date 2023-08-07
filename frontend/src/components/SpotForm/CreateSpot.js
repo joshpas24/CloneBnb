@@ -64,7 +64,7 @@ const CreateSpotForm = () => {
     const addImage = (e) => {
         e.preventDefault();
         const newImgArr = images;
-        console.log(newImgArr)
+        // console.log(newImgArr)
         const url = e.target.value;
         let preview;
         if (!newImgArr.length) {
