@@ -1,7 +1,7 @@
 .home-header {
     /* width: 80%; */
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 30px 70px;
     padding-top: 30px;
@@ -13,6 +13,11 @@
     /* padding: 5px 10px; */
     /* gap: 8px; */
     border-radius: 50px;
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.1);
+}
+
+.view-toggle:hover {
+    box-shadow: none;
 }
 
 .view-toggle button {

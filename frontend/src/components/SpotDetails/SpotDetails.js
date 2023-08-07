@@ -19,10 +19,16 @@ function SpotDetails() {
     const { spotId } = useParams();
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const [error, setError] = useState("")
     const [bookingError, setBookingError] = useState("");
 
     const reviewsObj = useSelector(state=>state.reviews.spot);
     const reviews = Object.values(reviewsObj)
+
+    const spot = useSelector(state=>state.spots.singleSpot)
+    // const spot = spotsObj.singleSpot
+
+    const user = useSelector(state=>state.session.user)
 
     useEffect(() => {
         dispatch(thunkGetSpot(spotId))
@@ -33,14 +39,8 @@ function SpotDetails() {
         setEndDate(startDate)
     }, [startDate])
 
-    const spotsObj = useSelector(state=>state.spots)
-    const spot = spotsObj.singleSpot
-
-    const user = useSelector(state=>state.session.user)
-
     if (!spot.SpotImages) return null;
     const images = Object.values(spot.SpotImages)
-    // console.log("images: ",images)
 
     let existingReview
 

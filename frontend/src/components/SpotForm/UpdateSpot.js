@@ -10,7 +10,7 @@ const UpdateSpotForm = () => {
     const { spotId } = useParams();
     const spot = useSelector(state=>state.spots.singleSpot)
     // const spot = spotObj[spotId]
-    console.log("update spot: ", spot)
+    // console.log("update spot: ", spot)
 
     const [country, setCountry] = useState(spot.country);
     const [address, setAddress] = useState(spot.address);
@@ -35,7 +35,8 @@ const UpdateSpotForm = () => {
             setDescription(data.description)
             setName(data.name)
             setPrice(data.price)
-
+            setImages(data.SpotImages)
+            // console.log("images: ", images)
             if (data.lat) {
                 setLat(data.lat)
             }
@@ -65,7 +66,7 @@ const UpdateSpotForm = () => {
 
         dispatch(thunkUpdateSpot(updatedSpot))
             .then((res) => {
-                console.log("res from dispatch thunk creator: ",res)
+                // console.log("res from dispatch thunk creator: ",res)
                 if (res.errors) {
                     setErrors(res.errors)
                     console.log("errors set from thunk res: ", errors)
@@ -199,62 +200,67 @@ const UpdateSpotForm = () => {
                 <h2>Liven up your spot with photos</h2>
                 <h3>Submit a link to at least one photo to publish your spot. If adding multiple images, please select one to be your spot's preview image.</h3>
                 <div className="image-entry">
-                    <input
+                    {/* <input
                         type="checkbox"
                         checked={preview === 0}
                         onClick={() => setPreview(0)}
-                    />
+                    /> */}
                     <input
                         type="text"
                         placeholder="Image URL (required)"
+                        value={images[0].url}
                         onChange={(e) => addImage(e)}
                     />
                 </div>
                 <div className="image-entry">
-                    <input
+                    {/* <input
                         type="checkbox"
                         checked={preview === 1}
                         onClick={() => setPreview(1)}
-                    />
+                    /> */}
                     <input
                         type="text"
                         placeholder="Image URL"
+                        value={images[1].url}
                         onChange={(e) => addImage(e)}
                     />
                 </div>
                 <div className="image-entry">
-                    <input
+                    {/* <input
                         type="checkbox"
                         checked={preview === 2}
                         onClick={() => setPreview(2)}
-                    />
+                    /> */}
                     <input
                         type="text"
                         placeholder="Image URL"
+                        value={images[2].url}
                         onChange={(e) => addImage(e)}
                     />
                 </div>
                 <div className="image-entry">
-                    <input
+                    {/* <input
                         type="checkbox"
                         checked={preview === 3}
                         onClick={() => setPreview(3)}
-                    />
+                    /> */}
                     <input
                         type="text"
                         placeholder="Image URL"
+                        value={images[3].url}
                         onChange={(e) => addImage(e)}
                     />
                 </div>
                 <div className="image-entry">
-                    <input
+                    {/* <input
                         type="checkbox"
                         checked={preview === 4}
                         onClick={() => setPreview(4)}
-                    />
+                    /> */}
                     <input
                         type="text"
                         placeholder="Image URL"
+                        value={images[4].url}
                         onChange={(e) => addImage(e)}
                     />
                 </div>

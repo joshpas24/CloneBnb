@@ -7,8 +7,8 @@ const NAME_OF_BUCKET = "jp-clonebnb"; // <-- Use your bucket name here
 //------------------------Public Upload-------------------------------------
 
 const singlePublicFileUpload = async (file) => {
-    const imageFile = await file;
-    console.log("imageFile: ", imageFile)
+    // const imageFile = await file;
+    // console.log("imageFile: ", imageFile)
 	const { originalname, buffer } = await file;
 	const path = require("path");
 	// name of the file in your S3 bucket will be the date in ms plus the extension name
@@ -98,15 +98,6 @@ const storage = multer.memoryStorage({
 });
 
 const singleMulterUpload = (nameOfKey) => multer({ storage: storage }).single(nameOfKey);
-
-// {
-//     console.log("NAME OF KEY IN MULTER", nameOfKey)
-
-//     const res = multer({ storage: storage }).single(nameOfKey);
-
-//     console.log("MULTER RES: ", res)
-//     return res;
-// }
 
 const multipleMulterUpload = (nameOfKey) => multer({ storage: storage }).array(nameOfKey);
 

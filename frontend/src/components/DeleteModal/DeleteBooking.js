@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom'
 import { useModal } from "../../context/Modal";
 import './DeleteModal.css';
-import { thunkDeleteReview } from '../../store/reviews';
 import { thunkDeleteBooking } from '../../store/bookings';
 
 const DeleteBooking = ({ booking }) => {
@@ -14,7 +13,6 @@ const DeleteBooking = ({ booking }) => {
         dispatch(thunkDeleteBooking(booking))
             .then(closeModal)
         alert("Booking successfully deleted")
-        history.push("/bookings/current")
     }
 
     return (

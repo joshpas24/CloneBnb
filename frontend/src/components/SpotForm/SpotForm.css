@@ -182,8 +182,9 @@ textarea {
 }
 
 .image-entry {
-    display: grid;
-    grid-template-columns: 1fr 15fr;
+    display: flex;
+    gap: 5px;
+    /* grid-template-columns: 1fr 15fr; */
     padding-bottom: 10px;
 }
 

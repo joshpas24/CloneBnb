@@ -52,7 +52,6 @@ export const thunkGetSpots = () => async (dispatch) => {
 
     if (res.ok) {
         const data = await res.json();
-        console.log("data from thunkGetSpots: ", data)
         dispatch(getSpots(data.Spots))
     }
 }
@@ -62,18 +61,16 @@ export const thunkGetSpot = (spotId) => async (dispatch) => {
         method: "GET",
         headers: {"Content-Type": "application/json"}
     });
-    // console.log("response from api: ", res)
 
     if (res.ok) {
         const data = await res.json();
-        // console.log("data from thunk: ", data)
         dispatch(getSpot(data))
         return data
     }
 }
 
 export const thunkCreateSpot = (spot, images, buffer) => async (dispatch) => {
-    console.log(images)
+
     try {
         const res = await csrfFetch("/api/spots", {
             method: "POST",
@@ -83,7 +80,6 @@ export const thunkCreateSpot = (spot, images, buffer) => async (dispatch) => {
 
         const data = await res.json();
 
-        console.log("data from create thunk: ", data)
         dispatch(thunkAddImageToSpot(data, images, buffer))
 
         return data
@@ -95,28 +91,28 @@ export const thunkCreateSpot = (spot, images, buffer) => async (dispatch) => {
 }
 
 export const thunkAddImageToSpot = (spot, images, buffer) => async (dispatch) => {
-    console.log("images arg received from dispatch: ", images)
-
 
     if (buffer) {
-        images.forEach((image) => {
-            console.log("image sent to backend: ",image)
+        images.forEach(async (image) => {
             const formData = new FormData();
             formData.append("image", image);
 
-            csrfFetch(`/api/upload/${spot.id}/aws`, {
+            const res = await csrfFetch(`/api/upload/${spot.id}/aws`, {
                 method: "POST",
-                // headers: {"Content-Type": "multipart/form-data"},
                 body: formData
             })
+
+            return;
         })
     } else {
-        images.forEach( async (image) => {
+        images.forEach(async (image) => {
             const res = await csrfFetch(`/api/spots/${spot.id}/images`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(image)
             })
+
+            return;
         })
     }
 

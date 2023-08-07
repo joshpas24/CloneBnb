@@ -13,7 +13,7 @@ const DeleteSpotModal = ({ spot }) => {
     const handleDelete = () => {
         dispatch(thunkDeleteSpot(spot))
             .then(closeModal)
-        history.push("/spots/current")
+        alert("Spot successfully deleted")
     }
 
     return (

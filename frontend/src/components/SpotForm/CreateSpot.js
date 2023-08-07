@@ -3,8 +3,6 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { thunkCreateSpot } from "../../store/spots";
 import './SpotForm.css'
-import FileImageUpload from "./Images/FileImageUpload";
-import LinkImageUpload from "./Images/LinkImageUpload";
 
 const CreateSpotForm = () => {
     const dispatch = useDispatch();
@@ -21,7 +19,7 @@ const CreateSpotForm = () => {
     const [images, setImages] = useState([]);
     const [files, setFiles] = useState([]);
     const [buffer, setBuffer] = useState(false)
-    const [imageType, setImageType] = useState('')
+    const [imageType, setImageType] = useState('links')
     const [preview, setPreview] = useState(0);
     const [errors, setErrors] = useState({});
 
@@ -51,7 +49,7 @@ const CreateSpotForm = () => {
         }
 
         if (files.length > images.length) {
-            dispatch(thunkCreateSpot(spot, files, buffer, preview))
+            dispatch(thunkCreateSpot(spot, files, buffer))
                 .then((res) => {
                     if (res.errors) {
                         setErrors(res.errors)
@@ -66,12 +64,13 @@ const CreateSpotForm = () => {
     const addImage = (e) => {
         e.preventDefault();
         const newImgArr = images;
+        console.log(newImgArr)
         const url = e.target.value;
         let preview;
-        if (newImgArr.length > 1) {
-            preview = false
-        } else {
+        if (!newImgArr.length) {
             preview = true
+        } else {
+            preview = false
         }
         newImgArr.push({url, preview})
         setImages(newImgArr)
@@ -89,17 +88,18 @@ const CreateSpotForm = () => {
     }, [preview])
 
     useEffect(() => {
-        // console.log("files: ", files)
         if (files.length) {
             setBuffer(true)
+        }
+        if (files.length > 5) {
+            errors.files = 'Maximum of 5 images allowed'
         }
     }, [files]);
 
     const handleDeleteImage = (index) => {
         const updatedFiles = files.filter((_, i) => i !== index);
         setFiles(updatedFiles);
-        // if (index === 0)
-        setPreview(0); // Reset selected image after deletion
+        setPreview(0);
     };
 
     const handlePreview = (index) => {
@@ -120,17 +120,18 @@ const CreateSpotForm = () => {
                             </div>
                         ))}
                     </div>
+                    {errors.files && <p>{errors.files}</p>}
                 </div>
             )
         } else if (imageType === 'link') {
             return (
                 <div className="link-input">
                     <div className="image-entry">
-                        <input
+                        {/* <input
                             type="checkbox"
                             checked={preview === 0}
                             onClick={() => setPreview(0)}
-                        />
+                        /> */}
                         <input
                             type="text"
                             placeholder="Preview Image URL"
@@ -138,11 +139,11 @@ const CreateSpotForm = () => {
                         />
                     </div>
                     <div className="image-entry">
-                        <input
+                        {/* <input
                             type="checkbox"
                             checked={preview === 1}
                             onClick={() => setPreview(1)}
-                        />
+                        /> */}
                         <input
                             type="text"
                             placeholder="Image URL"
@@ -150,11 +151,11 @@ const CreateSpotForm = () => {
                         />
                     </div>
                     <div className="image-entry">
-                        <input
+                        {/* <input
                             type="checkbox"
                             checked={preview === 2}
                             onClick={() => setPreview(2)}
-                        />
+                        /> */}
                         <input
                             type="text"
                             placeholder="Image URL"
@@ -162,11 +163,11 @@ const CreateSpotForm = () => {
                         />
                     </div>
                     <div className="image-entry">
-                        <input
+                        {/* <input
                             type="checkbox"
                             checked={preview === 3}
                             onClick={() => setPreview(3)}
-                        />
+                        /> */}
                         <input
                             type="text"
                             placeholder="Image URL"
@@ -174,11 +175,11 @@ const CreateSpotForm = () => {
                         />
                     </div>
                     <div className="image-entry">
-                        <input
+                        {/* <input
                             type="checkbox"
                             checked={preview === 4}
                             onClick={() => setPreview(4)}
-                        />
+                        /> */}
                         <input
                             type="text"
                             placeholder="Image URL"
@@ -293,7 +294,8 @@ const CreateSpotForm = () => {
                 <h3>Submit a file or link to at least one photo to publish your spot. If adding multiple images, please select one to be your spot's preview image.</h3>
                 <div className="image-type">
                     <div className="image-radio">
-                        <input type="radio" id="file" name="imageType" onClick={() => setImageType('file')}/>
+                        {/* <input type="radio" id="file" name="imageType" onClick={() => setImageType('file')}/> */}
+                        <input type="radio" id="file" name="imageType" onClick={() => alert('Feature undergoing maintenance. Please add images by links.')}/>
                         <div>File</div>
                     </div>
                     <div className="image-radio">

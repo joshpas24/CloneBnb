@@ -7,7 +7,7 @@ const router = express.Router();
 
 //Add aws image to spot by spotId
 router.post('/:id/aws', requireAuth, singleMulterUpload("image"), async (req, res) => {
-    console.log("req file from multer: ", req)
+    // console.log("req file from multer: ", req)
 
     const spot = await Spot.findByPk(req.params.id);
 
@@ -26,10 +26,7 @@ router.post('/:id/aws', requireAuth, singleMulterUpload("image"), async (req, re
     };
 
     const file = req.file
-    console.log("file: ", file)
-    console.log("req: ", req.body)
     const url = await singlePublicFileUpload(file);
-    console.log("url from singleUpload: ", url)
 
     const images = await SpotImage.findAll({
         where: {
@@ -56,6 +53,8 @@ router.post('/:id/aws', requireAuth, singleMulterUpload("image"), async (req, re
     }
 
     res.json(response)
+    // console.log("new spotImage: ", newImage)
+    // console.log("sanity check: ", response)
 });
 
 module.exports = router;

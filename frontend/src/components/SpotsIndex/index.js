@@ -8,7 +8,6 @@ const SpotsIndex = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const spotsObj = useSelector(state=>state.spots.allSpots);
-    console.log("state obj from index component: ", spotsObj)
     const spots = Object.values(spotsObj);
 
     useEffect(() => {
