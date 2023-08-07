@@ -196,15 +196,15 @@ const UpdateSpotForm = () => {
                     {errors.name && <p>{errors.name}</p>}
                 </div>
             </section>
-            <section className="add-images">
+            {/* <section className="add-images">
                 <h2>Liven up your spot with photos</h2>
                 <h3>Submit a link to at least one photo to publish your spot. If adding multiple images, please select one to be your spot's preview image.</h3>
                 <div className="image-entry">
-                    {/* <input
+                    <input
                         type="checkbox"
                         checked={preview === 0}
                         onClick={() => setPreview(0)}
-                    /> */}
+                    />
                     <input
                         type="text"
                         placeholder="Image URL (required)"
@@ -213,11 +213,11 @@ const UpdateSpotForm = () => {
                     />
                 </div>
                 <div className="image-entry">
-                    {/* <input
+                    <input
                         type="checkbox"
                         checked={preview === 1}
                         onClick={() => setPreview(1)}
-                    /> */}
+                    />
                     <input
                         type="text"
                         placeholder="Image URL"
@@ -226,11 +226,11 @@ const UpdateSpotForm = () => {
                     />
                 </div>
                 <div className="image-entry">
-                    {/* <input
+                    <input
                         type="checkbox"
                         checked={preview === 2}
                         onClick={() => setPreview(2)}
-                    /> */}
+                    />
                     <input
                         type="text"
                         placeholder="Image URL"
@@ -239,11 +239,11 @@ const UpdateSpotForm = () => {
                     />
                 </div>
                 <div className="image-entry">
-                    {/* <input
+                    <input
                         type="checkbox"
                         checked={preview === 3}
                         onClick={() => setPreview(3)}
-                    /> */}
+                    />
                     <input
                         type="text"
                         placeholder="Image URL"
@@ -252,11 +252,11 @@ const UpdateSpotForm = () => {
                     />
                 </div>
                 <div className="image-entry">
-                    {/* <input
+                    <input
                         type="checkbox"
                         checked={preview === 4}
                         onClick={() => setPreview(4)}
-                    /> */}
+                    />
                     <input
                         type="text"
                         placeholder="Image URL"
@@ -264,7 +264,7 @@ const UpdateSpotForm = () => {
                         onChange={(e) => addImage(e)}
                     />
                 </div>
-            </section>
+            </section> */}
             <div className="form-bottom-div">
                 <button
                     className="create-spot-button"

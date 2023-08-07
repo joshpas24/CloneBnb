@@ -12,7 +12,7 @@ const DeleteBooking = ({ booking }) => {
     const handleDelete = () => {
         dispatch(thunkDeleteBooking(booking))
             .then(closeModal)
-        alert("Booking successfully deleted")
+        // alert("Booking successfully deleted")
     }
 
     return (

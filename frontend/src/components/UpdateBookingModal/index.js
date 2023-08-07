@@ -30,11 +30,8 @@ const UpdateBooking = ({ booking }) => {
 
         dispatch(thunkUpdateBooking(updatedBooking))
             .then((res) => {
-                console.log("response from thunk dispatch: ", res)
                 if (res.errors) {
                     setErrors(res.errors)
-                } else {
-                    history.push("/bookings/current")
                 }
             }).then(closeModal)
     }
