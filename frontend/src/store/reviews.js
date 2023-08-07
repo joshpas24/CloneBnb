@@ -44,8 +44,6 @@ export const thunkGetSpotReviews = (spotId) => async (dispatch) => {
         headers: {"Content-Type": "application/json"}
     });
 
-    // const user = dispatch(restoreUser())
-
     if (res.ok) {
         const data = await res.json();
         dispatch(getSpotReviews(data.Reviews))
@@ -85,7 +83,7 @@ export const thunkCreateReview = (review, spotId) => async (dispatch) => {
         body: JSON.stringify(review)
     })
     const data = await res.json();
-    
+
     dispatch(thunkGetSpotReviews(spotId))
     return data;
 }

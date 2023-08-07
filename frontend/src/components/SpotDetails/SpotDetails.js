@@ -89,7 +89,6 @@ function SpotDetails() {
         } else if (user.id === spot.ownerId) {
             alert('You cannot make reservations on your own spot.')
         } else {
-            console.log(startDate, endDate)
             dispatch(thunkBookSpot(spot.id, startDate, endDate))
                 .then((res) => {
                     if (res && res.errors) {

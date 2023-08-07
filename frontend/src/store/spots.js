@@ -138,7 +138,6 @@ export const thunkUpdateSpot = (spot) => async (dispatch) => {
             body: JSON.stringify(spot)
         });
         const data = await res.json();
-        console.log("data from thunk: ", data)
 
         if (res.ok) {
             dispatch(updateSpot(data))
