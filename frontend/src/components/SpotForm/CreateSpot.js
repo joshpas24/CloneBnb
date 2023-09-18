@@ -191,7 +191,7 @@ const CreateSpotForm = () => {
     }
 
     return (
-        <>
+        <div className="form-page-container">
         <h1>Create New Spot</h1>
         <form className="create-spot" onSubmit={handleSubmit}>
             <section className="create-location">
@@ -273,13 +273,14 @@ const CreateSpotForm = () => {
                     placeholder="Name of your spot"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    className="spot-name-input"
                 />
                 {errors.name && <p>{errors.name}</p>}
             </section>
             <section>
                 <h2>Set a base price for your spot</h2>
                 <h3>Competitive pricing can help your listing stand out and rank higher in search results.</h3>
-                <div className="image-entry">
+                <div className="price-entry">
                     $ <input
                         value={price}
                         placeholder="Price per night (USD)"
@@ -312,7 +313,7 @@ const CreateSpotForm = () => {
                 </button>
             </div>
         </form>
-    </>
+    </div>
     )
 }
 

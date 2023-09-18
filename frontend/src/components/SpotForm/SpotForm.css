@@ -1,4 +1,12 @@
 
+.form-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 h1 {
     font-size: 24pt;
     display: flex;
@@ -6,8 +14,9 @@ h1 {
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+    margin-bottom: 15px;
     padding: 20px 0;
-    width: 45%;
+    width: 40%;
     border-bottom: 2px solid #ff3131;
     gap: none;
 }
@@ -17,36 +26,69 @@ h1 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0 auto;
+    margin: 0 10%;
     width: 40%;
     font-family: 'Lato', sans-serif;
 }
 
 .create-spot section {
+    display: flex;
+    flex-direction: column;
     padding-bottom: 30px;
     border-bottom: 2px solid lightgray;
+    width: 100%;
+    gap: 10px;
 }
 
 section input {
-    width: 95%
+    width: 100%;
+    background-color: rgb(239, 239, 239);
+    /* padding: 5px 2px; */
+    border: 2px solid rgb(239, 239, 239);
+    border-radius: 5px;
+}
+
+section input:focus {
+    /* border: 2px solid red; */
+    outline: none;
+}
+
+.create-spot label {
+    background-color: rgb(239, 239, 239);
+    padding: 8px;
+    font-size: 10pt;
+    border: 2px solid rgb(239, 239, 239);
+    border-radius: 5px;
+    color: #ff3131;
+}
+
+.create-spot label:focus-within {
+    border: 2px solid #ff3131;
 }
 
 label input {
     width: auto;
 }
 
+.spot-name-input {
+    padding: 8px;
+    width: auto;
+}
+
 section textarea {
-    width: 96%;
-    height: 70px;
+    height: 100px;
 }
 
 section h2 {
     font-size: 16pt;
+    margin: 10px 0;
 }
 
 section h3 {
     font-size: 12pt;
     text-decoration: none;
+    margin: 0;
+    margin-bottom: 10px;
 }
 
  p {
@@ -55,17 +97,36 @@ section h3 {
     margin-top: 2px;
  }
 
-label {
-    padding-top: 15px;
-    font-size: 12pt;
-}
 
 textarea {
     font-family: 'Lato', sans-serif;
+    background-color: rgb(239, 239, 239);
+    padding: 8px;
+    /* font-size: 10pt; */
+    border: 2px solid rgb(239, 239, 239);
+    border-radius: 5px;
+    /* width: 100%; */
+}
+
+textarea:focus {
+    outline: none;
 }
 
 .create-location {
+    width: 100%;
     gap: 6px;
+}
+
+.price-entry {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    background-color: rgb(239, 239, 239);
+    padding: 8px;
+    /* font-size: 10pt; */
+    border: 2px solid rgb(239, 239, 239);
+    border-radius: 5px;
+    color: #ff3131;
 }
 
 .same-line {
@@ -83,7 +144,7 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    width: 95%;
+    width: 100%;
 }
 
 .image-radio {
@@ -200,7 +261,7 @@ textarea {
     align-items: center;
     gap: 5px;
     border: 2px solid white;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: #ff3131;
     color: white;
     padding: 10px 20px;
