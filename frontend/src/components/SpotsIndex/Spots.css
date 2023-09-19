@@ -4,7 +4,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     padding: 50px 70px;
-    padding-top: 0;
+    padding-bottom: 40px;
     font-family: 'Lato', sans-serif;
 }
 

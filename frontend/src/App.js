@@ -12,6 +12,7 @@ import UpdateSpotForm from "./components/SpotForm/UpdateSpot";
 import ManageBookings from "./components/ManageBookings";
 import HomePage from "./components/Home";
 import ManageAccount from "./components/ManageProfile";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function App() {
           <Route exact path="/manage" component={ManageAccount}/>
         </Switch>
       }
+      <Footer />
     </>
   );
 }
