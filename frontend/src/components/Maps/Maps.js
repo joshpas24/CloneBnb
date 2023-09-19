@@ -6,12 +6,12 @@ import './Maps.css'
 const containerStyle = {
   // padding: '30px 70px',
   width: 'auto',
-  height: '560px',
+  height: '100%',
   zIndex: '0'
 };
 
 const center = {
-  lat: 33.9072,
+  lat: 33.75,
   lng: -118.1,
 };
 

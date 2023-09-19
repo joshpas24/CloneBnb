@@ -8,8 +8,8 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    options.tableName = 'Bookings';
-    return queryInterface.bulkInsert(options, [
+    // options.tableName = 'Bookings';
+    return queryInterface.bulkInsert('Bookings', [
       {
         spotId: 1,
         userId: 2,
@@ -32,9 +32,9 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    options.tableName = 'Bookings';
+    // options.tableName = 'Bookings';
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
+    return queryInterface.bulkDelete('Bookings', {
       spotId: { [Op.in]: [1, 2, 3] }
     }, {});
   }

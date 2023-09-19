@@ -1,0 +1,8 @@
+.footer-container {
+    padding: 40px 0;
+    border-top: 1px solid lightgray;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    background-color: rgb(245, 245, 245);
+}

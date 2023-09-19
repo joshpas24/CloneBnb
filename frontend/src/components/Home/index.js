@@ -7,6 +7,14 @@ const HomePage = () => {
     const [view, setView] = useState("grid")
 
 
+    const toggleView = () => {
+        if (view === 'grid') {
+            setView('map')
+        } else {
+            setView('grid')
+        }
+    }
+
     const handleView = () => {
         if (view === 'grid') {
             return (
@@ -21,28 +29,27 @@ const HomePage = () => {
 
     return (
         <>
-            <div className='home-header'>
-                {/* <div>
-                    Filter
-                </div> */}
-                <div className='view-toggle'>
-                    <button onClick={() => setView('map')} id='view-toggle-left' className={view === 'map' ? 'active-view' : 'non-active-view'}>
-                        <i class="fa-regular fa-map"></i>
-                    </button>
-                    <button onClick={() => setView('grid')} id='view-toggle-right' className={view === 'grid' ? 'active-view' : 'non-active-view'}>
-                        <div className='grid-icon'>
-                            <i class="fa-solid fa-square"></i>
-                            <i class="fa-solid fa-square"></i>
-                            <i class="fa-solid fa-square"></i>
-                            <i class="fa-solid fa-square"></i>
-                        </div>
-                    </button>
-                </div>
-                {/* <div>
-                    Sort
-                </div> */}
-            </div>
             {handleView()}
+            <div className='home-toggle'>
+                <button onClick={() => toggleView()} className='toggle-button'>
+                    {view === 'grid' ? (
+                        <div className='button-content'>
+                            <div>Show map</div>
+                            <i class="fa-regular fa-map"></i>
+                        </div>
+                    ): (
+                        <div className='button-content'>
+                            <div>Show list</div>
+                            <div className='grid-icon'>
+                                <i class="fa-solid fa-square-full"></i>
+                                <i class="fa-solid fa-square-full"></i>
+                                <i class="fa-solid fa-square-full"></i>
+                                <i class="fa-solid fa-square-full"></i>
+                            </div>
+                        </div>
+                    )}
+                </button>
+            </div>
         </>
     )
 }

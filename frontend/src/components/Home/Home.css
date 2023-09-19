@@ -1,64 +1,42 @@
-.home-header {
-    /* width: 80%; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px 70px;
-    padding-top: 30px;
-}
 
-.view-toggle {
-    display: flex;
-    border: 1px solid rgb(215, 215, 215);
-    /* padding: 5px 10px; */
-    /* gap: 8px; */
-    border-radius: 50px;
-    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.1);
-}
-
-.view-toggle:hover {
-    box-shadow: none;
-}
-
-.view-toggle button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    background-color: transparent;
-    padding: 8px 13px;
-    /* color: darkgrey; */
-    cursor: pointer;
-}
-
-.view-toggle button:hover {
-    background-color: rgb(239, 239, 239);
-}
-
-#view-toggle-left {
-    border-right: 1px solid rgb(215, 215, 215);
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
-    padding-left: 16px;
-}
-
-#view-toggle-right {
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
-    padding-right: 16px;
-}
-
-.active-view {
-    color: #ff3131;
-}
-
-.non-active-view {
-    color: gray;
-}
 
 .grid-icon {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2px;
     font-size: 6px;
+}
+
+.home-toggle {
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    position: sticky;
+    bottom: 80px;
+    padding-bottom: 40px;
+}
+
+.toggle-button {
+    background-color: rgb(20, 20, 20);
+    color: white;
+    font-size: 12pt;
+    padding: 14px 18px;
+    border: 2px solid rgb(20, 20, 20);
+    border-radius: 50px;
+    box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.toggle-button:hover {
+    border: 2px solid black;
+    background-color: black
+}
+
+.toggle-button:active {
+    border: 0;
+}
+
+.button-content {
+    display: flex;
+    gap: 8px;
 }
