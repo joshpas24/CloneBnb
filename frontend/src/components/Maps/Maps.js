@@ -33,7 +33,7 @@ const Maps = ({ apiKey }) => {
           center={center}
           zoom={9}
         >
-          {spots.map((spot) => (
+          {spots && spots.map((spot) => (
             <Marker
               key={spot.id}
               position={{lat: spot.lat, lng: spot.lng}}

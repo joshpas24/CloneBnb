@@ -14,10 +14,16 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    size: 100px;
     padding: 18px 50px;
     height: fit-content;
-    border-bottom: 2px solid rgb(227, 224, 224);
+    border-bottom: 2px solid rgb(239, 239, 239);
+    box-shadow: 0px 4px 10px rgba(157, 157, 157, 0.1);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: white;
+    /* width: 100%; */
 };
 
 #homeButton {
