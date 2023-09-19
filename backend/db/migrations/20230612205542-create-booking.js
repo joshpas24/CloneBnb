@@ -8,8 +8,8 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // options.tableName = 'Bookings';
-    await queryInterface.createTable('Bookings', {
+    options.tableName = 'Bookings';
+    await queryInterface.createTable(options, {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -63,7 +63,7 @@ module.exports = {
   },
   async down(queryInterface, Sequelize) {
     options.tableName = 'Bookings';
-    await queryInterface.removeConstraint('Bookings', 'Bookings_endDate_check');
+    await queryInterface.removeConstraint(options, 'Bookings_endDate_check');
     await queryInterface.dropTable('Bookings');
   }
 };
