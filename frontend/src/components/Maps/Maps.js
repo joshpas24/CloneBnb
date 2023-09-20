@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { GoogleMap, Marker, useJsApiLoader, InfoWindow } from '@react-google-maps/api';
 import { thunkGetSpots } from '../../store/spots';
 import ImageCarousel from '../Carousel';
+import markerIcon from "./Icon.png"
 import './Maps.css'
 
 const containerStyle = {
@@ -18,7 +19,8 @@ const center = {
   lng: -118.1,
 };
 
-const Maps = ({ apiKey }) => {
+const Maps = ({ apiKey, options = { overlay: true, marker: true } }) => {
+  const { setLat, setLng, width, height, zoom, onZoomChange, draggable, overlay, offsetX, offsetY, overlayStyle, overlayContent, icon, marker, spot } = options;
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -48,14 +50,14 @@ const Maps = ({ apiKey }) => {
           center={center}
           zoom={9}
         >
-          {spots && spots.map((spot) => (
+          {marker && spots.map((spot) => (
             <Marker
               key={spot.id}
               position={{lat: spot.lat, lng: spot.lng}}
               title={spot.name}
               onClick={() => setSelectedMarker(spot)}
               icon={{
-                url: "CloneBnb_2/Icon.png",
+                url: `${markerIcon}`,
                 scaledSize: new window.google.maps.Size(38, 40)
               }}
             />
