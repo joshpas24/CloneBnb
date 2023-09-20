@@ -56,10 +56,10 @@ const Maps = ({ apiKey, options = { overlay: true, marker: true } }) => {
               position={{lat: spot.lat, lng: spot.lng}}
               title={spot.name}
               onClick={() => setSelectedMarker(spot)}
-              icon={{
-                url: `${markerIcon}`,
-                scaledSize: new window.google.maps.Size(38, 40)
-              }}
+              // icon={{
+              //   url: `${markerIcon}`,
+              //   scaledSize: new window.google.maps.Size(38, 40)
+              // }}
             />
           ))}
           {selectedMarker && (
