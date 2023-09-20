@@ -1,7 +1,9 @@
 .manage-container {
     padding: 50px;
+    padding-top: 140px;
     display: grid;
     grid-template-columns: 1fr 3fr;
+    height: 100%;
 }
 
 .profile-nav {

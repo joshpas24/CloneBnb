@@ -171,6 +171,12 @@ router.get('/', validateQuery, async(req, res) => {
             }
         });
 
+        const images = await SpotImage.findAll({
+            where: {
+                spotId: spot.id
+            }
+        })
+
         let imageVal;
         if (!image) {
             imageVal = null;
@@ -180,6 +186,7 @@ router.get('/', validateQuery, async(req, res) => {
 
         newSpot.avgRating = avgRating;
         newSpot.previewImage = imageVal;
+        newSpot.images = images;
 
         newSpots.push(newSpot);
     };

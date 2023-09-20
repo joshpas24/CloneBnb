@@ -1,6 +1,9 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { GoogleMap, Marker, useJsApiLoader, InfoWindow } from '@react-google-maps/api';
+import { thunkGetSpots } from '../../store/spots';
+import ImageCarousel from '../Carousel';
 import './Maps.css'
 
 const containerStyle = {
@@ -16,14 +19,26 @@ const center = {
 };
 
 const Maps = ({ apiKey }) => {
+  const dispatch = useDispatch()
+  const history = useHistory()
 
   const spotsObj = useSelector(state=>state.spots.allSpots);
   const spots = Object.values(spotsObj)
+
+  const [selectedMarker, setSelectedMarker] = useState(null);
+
+  useEffect(() => {
+    dispatch(thunkGetSpots())
+  }, [dispatch])
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: apiKey,
   });
+
+  const getDetails = (spotId) => {
+    history.push(`/spots/${spotId}`)
+  }
 
   return (
     <div className='map-container'>
@@ -38,12 +53,46 @@ const Maps = ({ apiKey }) => {
               key={spot.id}
               position={{lat: spot.lat, lng: spot.lng}}
               title={spot.name}
+              onClick={() => setSelectedMarker(spot)}
               icon={{
                 url: "CloneBnb_2/Icon.png",
                 scaledSize: new window.google.maps.Size(38, 40)
               }}
             />
           ))}
+          {selectedMarker && (
+            <InfoWindow
+              position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
+              closeBoxUrl=""
+            >
+              <div className='spotBox'
+                key={selectedMarker.id} title={selectedMarker.name}
+              >
+                <button
+                  className="custom-close-button"
+                  onClick={() => setSelectedMarker(null)}
+                >
+                  <i class="fa-solid fa-x"></i>
+                </button>
+                <div className='spotImageDiv'>
+                    {/* <img src={`${selectedMarker.previewImage}`} className='spotImage'/> */}
+                    <ImageCarousel images={selectedMarker.images} />
+                </div>
+                <div className='spotInfo' onClick={() => history.push(`/spots/${selectedMarker.id}`)}>
+                    <div className='spotInfoTop' style={{ alignItems: 'center' }}>
+                        <div style={{ fontWeight: '700', fontSize: '12pt' }}>{`${selectedMarker.city}, ${selectedMarker.state}`}</div>
+                        <div className='spotInfoRating' style={{ fontSize: '12pt', alignItems: 'flex-start' }}>
+                            <i className="fa-solid fa-star"></i>
+                            <div>{!selectedMarker.avgRating ? "New" : `${selectedMarker.avgRating.toFixed(1)}`}</div>
+                        </div>
+                    </div>
+                    <div className='spotInfoBottom' style={{ fontWeight: '300', fontSize: '10pt' }}>
+                        {`$${selectedMarker.price.toLocaleString()} night`}
+                    </div>
+                </div>
+              </div>
+            </InfoWindow>
+          )}
         </GoogleMap>
       )}
     </div>

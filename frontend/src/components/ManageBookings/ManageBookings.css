@@ -1,12 +1,14 @@
 .bookings-list {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     /* align-items: center; */
     gap: 15px;
     /* margin-top: 15px; */
     margin-bottom: 50px;
     padding: 0 25px;
+    height: 100vh;
+    overflow-y: auto;
 }
 
 .booking-box {

@@ -1,0 +1,61 @@
+.carousel-container {
+    height: 100%;
+    width: 100%;
+}
+
+.carousel-buttons {
+    position: absolute;
+    top: 40%;
+    width: 88%;
+    display: flex;
+    justify-content: space-between !important;
+    padding: 0 5px;
+}
+
+.carousel-buttons button {
+    cursor: pointer;
+    border-radius: 50px;
+    opacity: 70%;
+    border: 2px solid white;
+    background-color: white;
+    padding: 5px 8px;
+}
+
+.carousel-buttons button:hover {
+    opacity: 100%;
+}
+
+.carousel-buttons button:active {
+    border: 2px solid transparent !important;
+}
+
+.gm-ui-hover-effect {
+    display: none !important;
+}
+
+.carousel-images img {
+    /* width: 250px; */
+    object-fit: cover;
+}
+
+.custom-close-button {
+    cursor: pointer;
+    position: absolute;
+    top: 20;
+    left: 20;
+    bottom: 10;
+    color: white;
+    background-color: black;
+    padding: 5px 8px;
+    border: none;
+    opacity: 40%;
+    border-radius: 50px;
+}
+
+/* .gm-style-iw.gm-style-iw-c {
+    padding: none;
+}
+
+.gm-style-iwd-d {
+    padding: 0 !important;
+} */
