@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import './Carousel.css'
 
 
-function ImageCarousel({ images }) {
+function ImageCarousel({ images, type }) {
 
     const [imgIdx, setImgIdx] = useState(0)
 
     return (
         <div className='carousel-container'>
-            <div className='carousel-buttons'>
+            <div className={`carousel-buttons-${type}`}>
                 <button onClick={() => setImgIdx(imgIdx - 1)}
                     disabled={imgIdx === 0 ? true : false}
                 >
@@ -20,7 +20,7 @@ function ImageCarousel({ images }) {
                     <i class="fa-solid fa-angle-right"></i>
                 </button>
             </div>
-            <div className='carousel-images'>
+            <div className='carousel-images' >
                 <img src={images[imgIdx].url} className='spotImage'/>
             </div>
         </div>

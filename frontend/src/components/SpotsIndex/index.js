@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom'
 import { thunkGetSpots } from '../../store/spots';
 import './Spots.css';
+import ImageCarousel from '../Carousel';
 
 const SpotsIndex = () => {
     const history = useHistory();
@@ -21,9 +22,9 @@ const SpotsIndex = () => {
     return (
         <div className='spotsGrid'>
             {spots.map((spot) => (
-                <div className='spotBox' onClick={() => getDetails(spot.id)} key={spot.id} title={spot.name}>
+                <div className='spotBox' key={spot.id} title={spot.name}>
                     <div className='spotImageDiv'>
-                        <img src={`${spot.previewImage}`} className='spotImage'/>
+                        <ImageCarousel images={spot.images} type='grid'/>
                     </div>
                     <div className='spotInfo'>
                         <div className='spotInfoTop'>

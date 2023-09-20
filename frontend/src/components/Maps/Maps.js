@@ -65,20 +65,19 @@ const Maps = ({ apiKey }) => {
               position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
               closeBoxUrl=""
             >
-              <div className='spotBox'
+              <div className='spotWindow'
                 key={selectedMarker.id} title={selectedMarker.name}
               >
-                <button
-                  className="custom-close-button"
-                  onClick={() => setSelectedMarker(null)}
-                >
-                  <i class="fa-solid fa-x"></i>
-                </button>
-                <div className='spotImageDiv'>
-                    {/* <img src={`${selectedMarker.previewImage}`} className='spotImage'/> */}
-                    <ImageCarousel images={selectedMarker.images} />
+                <div className='spotImageMapDiv'>
+                  <button
+                    className="custom-close-button"
+                    onClick={() => setSelectedMarker(null)}
+                  >
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                  <ImageCarousel images={selectedMarker.images} type='map'/>
                 </div>
-                <div className='spotInfo' onClick={() => history.push(`/spots/${selectedMarker.id}`)}>
+                <div className='spotInfo' id="map-info" onClick={() => history.push(`/spots/${selectedMarker.id}`)}>
                     <div className='spotInfoTop' style={{ alignItems: 'center' }}>
                         <div style={{ fontWeight: '700', fontSize: '12pt' }}>{`${selectedMarker.city}, ${selectedMarker.state}`}</div>
                         <div className='spotInfoRating' style={{ fontSize: '12pt', alignItems: 'flex-start' }}>
