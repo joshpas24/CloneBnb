@@ -44,7 +44,7 @@ const Maps = ({ apiKey, options = { overlay: true, marker: true } }) => {
 
   return (
     <div className='map-container'>
-      {isLoaded && spots && (
+      {isLoaded && spots && marker &&  (
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
