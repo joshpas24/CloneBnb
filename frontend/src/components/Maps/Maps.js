@@ -44,7 +44,7 @@ const Maps = ({ apiKey }) => {
 
   return (
     <div className='map-container'>
-      {isLoaded && spots && marker &&  (
+      {isLoaded && spots &&  (
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
