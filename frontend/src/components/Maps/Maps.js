@@ -19,8 +19,8 @@ const center = {
   lng: -118.1,
 };
 
-const Maps = ({ apiKey, options = { overlay: true, marker: true } }) => {
-  const { setLat, setLng, width, height, zoom, onZoomChange, draggable, overlay, offsetX, offsetY, overlayStyle, overlayContent, icon, marker, spot } = options;
+const Maps = ({ apiKey }) => {
+  // const { setLat, setLng, width, height, zoom, onZoomChange, draggable, overlay, offsetX, offsetY, overlayStyle, overlayContent, icon, marker, spot } = options;
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -50,16 +50,16 @@ const Maps = ({ apiKey, options = { overlay: true, marker: true } }) => {
           center={center}
           zoom={9}
         >
-          {marker && spots.map((spot) => (
+          {spots.map((spot) => (
             <Marker
               key={spot.id}
               position={{lat: spot.lat, lng: spot.lng}}
               title={spot.name}
               onClick={() => setSelectedMarker(spot)}
-              // icon={{
-              //   url: `${markerIcon}`,
-              //   scaledSize: new window.google.maps.Size(38, 40)
-              // }}
+              icon={{
+                url: `${markerIcon}`,
+                scaledSize: new window.google.maps.Size(38, 40)
+              }}
             />
           ))}
           {selectedMarker && (
