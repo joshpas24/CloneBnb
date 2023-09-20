@@ -1,0 +1,107 @@
+.carousel-container {
+    height: 100%;
+    width: 100%;
+}
+
+.carousel-buttons-map {
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    opacity: 1;
+    top: 110px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between !important;
+    /* gap: 90%; */
+    padding: 0 7px;
+    z-index: 1000;
+    margin: 0 !important;
+    /* transition: opacity 0.3s, visibility 0.3s; */
+}
+
+.carousel-container:hover .carousel-buttons-map {
+    visibility: visible !important;
+}
+
+.carousel-buttons-map button {
+    cursor: pointer;
+    border-radius: 50px;
+    opacity: 50%;
+    border: 2px solid white;
+    background-color: white;
+    padding: 5px 8px;
+}
+
+.carousel-buttons-map button:hover {
+    opacity: 100%;
+}
+
+.carousel-buttons-map button:active {
+    border: 2px solid transparent !important;
+}
+
+.carousel-buttons-grid {
+    opacity: 0;
+    visibility: hidden;
+    position: relative;
+    opacity: 1;
+    top: 130px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between !important;
+    /* gap: 90%; */
+    padding: 0 7px;
+    z-index: 1000;
+    margin: 0 !important;
+    /* transition: opacity 0.3s, visibility 0.3s; */
+}
+
+.carousel-buttons-grid button {
+    cursor: pointer;
+    border-radius: 50px;
+    opacity: 50%;
+    border: 2px solid white;
+    background-color: white;
+    padding: 5px 8px;
+}
+
+.carousel-container:hover .carousel-buttons-grid {
+    visibility: visible !important;
+}
+
+.carousel-buttons-grid button:hover {
+    opacity: 100%;
+}
+
+.carousel-buttons-grid button:active {
+    border: 2px solid transparent !important;
+}
+
+
+.gm-ui-hover-effect {
+    display: none !important;
+}
+
+.carousel-images {
+    height: 100%;
+    display: flex;
+    transition: transform 0.5s ease;
+    overflow-x: hidden;
+}
+
+.carousel-images img {
+    /* width: 250px; */
+    object-fit: cover;
+}
+
+
+
+/* .gm-style-iw.gm-style-iw-c {
+    padding: none;
+}
+
+.gm-style-iwd-d {
+    padding: 0 !important;
+} */

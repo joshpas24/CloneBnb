@@ -13,6 +13,7 @@ import ManageBookings from "./components/ManageBookings";
 import HomePage from "./components/Home";
 import ManageAccount from "./components/ManageProfile";
 import Footer from "./components/Footer";
+import './App.css'
 
 function App() {
   const dispatch = useDispatch();

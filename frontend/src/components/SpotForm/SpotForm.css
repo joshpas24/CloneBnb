@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    padding-top: 100px;
 }
 
 h1 {
@@ -59,7 +60,7 @@ section input:focus {
     font-size: 10pt;
     border: 2px solid rgb(239, 239, 239);
     border-radius: 5px;
-    color: #ff3131;
+    /* color: #ff3131; */
 }
 
 .create-spot label:focus-within {
@@ -126,7 +127,7 @@ textarea:focus {
     /* font-size: 10pt; */
     border: 2px solid rgb(239, 239, 239);
     border-radius: 5px;
-    color: #ff3131;
+    /* color: #ff3131; */
 }
 
 .same-line {
