@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { GoogleMap, Marker, useJsApiLoader, InfoWindow } from '@react-google-maps/api';
+import { GoogleMap, Marker, useJsApiLoader, InfoWindow, MarkerF } from '@react-google-maps/api';
 import { thunkGetSpots } from '../../store/spots';
 import ImageCarousel from '../Carousel';
 import markerIcon from "./Icon.png"
@@ -51,7 +51,7 @@ const Maps = ({ apiKey }) => {
           zoom={9}
         >
           {spots.map((spot) => (
-            <Marker
+            <MarkerF
               key={spot.id}
               position={{lat: spot.lat, lng: spot.lng}}
               title={spot.name}
