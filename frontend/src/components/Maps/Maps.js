@@ -33,7 +33,7 @@ const Maps = ({ apiKey }) => {
   useEffect(() => {
     dispatch(thunkGetSpots())
     setSpotsLoaded(true)
-    console.log("spots: ", spots)
+    // console.log("spots: ", spots)
   }, [dispatch])
 
   const { isLoaded } = useJsApiLoader({
@@ -56,7 +56,7 @@ const Maps = ({ apiKey }) => {
           {spots && spots.length > 0 && spots.map((spot) => (
             <MarkerF
               key={spot.id}
-              position={{lat: spot.lat, lng: spot.lng}}
+              position={{lat: parseFloat(spot.lat), lng: parseFloat(spot.lng)}}
               title={spot.name}
               onClick={() => setSelectedMarker(spot)}
               icon={{
