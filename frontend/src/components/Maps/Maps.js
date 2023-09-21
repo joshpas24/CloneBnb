@@ -33,6 +33,7 @@ const Maps = ({ apiKey }) => {
   useEffect(() => {
     dispatch(thunkGetSpots())
     setSpotsLoaded(true)
+    console.log("spots: ", spots)
   }, [dispatch])
 
   const { isLoaded } = useJsApiLoader({
