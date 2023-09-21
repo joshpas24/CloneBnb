@@ -28,9 +28,11 @@ const Maps = ({ apiKey }) => {
   const spots = Object.values(spotsObj)
 
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const [spotsLoaded, setSpotsLoaded] = useState(false)
 
   useEffect(() => {
     dispatch(thunkGetSpots())
+    setSpotsLoaded(true)
   }, [dispatch])
 
   const { isLoaded } = useJsApiLoader({
@@ -44,13 +46,13 @@ const Maps = ({ apiKey }) => {
 
   return (
     <div className='map-container'>
-      {isLoaded && spots &&  (
+      {isLoaded && spotsLoaded &&  (
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
           zoom={9}
         >
-          {spots.map((spot) => (
+          {spots && spots.length > 0 && spots.map((spot) => (
             <MarkerF
               key={spot.id}
               position={{lat: spot.lat, lng: spot.lng}}
