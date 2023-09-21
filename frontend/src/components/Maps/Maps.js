@@ -63,41 +63,40 @@ const Maps = ({ apiKey }) => {
                 url: `${markerIcon}`,
                 scaledSize: new window.google.maps.Size(38, 40)
               }}
-            >
-              {selectedMarker && (
-                <InfoWindow
-                  position={{ lat: parseFloat(selectedMarker.lat), lng: parseFloat(selectedMarker.lng) }}
-                  closeBoxUrl=""
-                >
-                  <div className='spotWindow'
-                    key={selectedMarker.id} title={selectedMarker.name}
-                  >
-                    <div className='spotImageMapDiv'>
-                      <button
-                        className="custom-close-button"
-                        onClick={() => setSelectedMarker(null)}
-                      >
-                        <i class="fa-solid fa-xmark"></i>
-                      </button>
-                      <ImageCarousel images={selectedMarker.images} type='map'/>
-                    </div>
-                    <div className='spotInfo' id="map-info" onClick={() => history.push(`/spots/${selectedMarker.id}`)}>
-                        <div className='spotInfoTop' style={{ alignItems: 'center' }}>
-                            <div style={{ fontWeight: '700', fontSize: '12pt' }}>{`${selectedMarker.city}, ${selectedMarker.state}`}</div>
-                            <div className='spotInfoRating' style={{ fontSize: '12pt', alignItems: 'flex-start' }}>
-                                <i className="fa-solid fa-star"></i>
-                                <div>{!selectedMarker.avgRating ? "New" : `${selectedMarker.avgRating.toFixed(1)}`}</div>
-                            </div>
-                        </div>
-                        <div className='spotInfoBottom' style={{ fontWeight: '300', fontSize: '10pt' }}>
-                            {`$${selectedMarker.price.toLocaleString()} night`}
-                        </div>
-                    </div>
-                  </div>
-                </InfoWindow>
-              )}
-            </Marker>
+          />
           ))}
+          {selectedMarker && (
+            <InfoWindow
+              position={{ lat: parseFloat(selectedMarker.lat), lng: parseFloat(selectedMarker.lng) }}
+              closeBoxUrl=""
+            >
+              <div className='spotWindow'
+                key={selectedMarker.id} title={selectedMarker.name}
+              >
+                <div className='spotImageMapDiv'>
+                  <button
+                    className="custom-close-button"
+                    onClick={() => setSelectedMarker(null)}
+                  >
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                  <ImageCarousel images={selectedMarker.images} type='map'/>
+                </div>
+                <div className='spotInfo' id="map-info" onClick={() => history.push(`/spots/${selectedMarker.id}`)}>
+                    <div className='spotInfoTop' style={{ alignItems: 'center' }}>
+                        <div style={{ fontWeight: '700', fontSize: '12pt' }}>{`${selectedMarker.city}, ${selectedMarker.state}`}</div>
+                        <div className='spotInfoRating' style={{ fontSize: '12pt', alignItems: 'flex-start' }}>
+                            <i className="fa-solid fa-star"></i>
+                            <div>{!selectedMarker.avgRating ? "New" : `${selectedMarker.avgRating.toFixed(1)}`}</div>
+                        </div>
+                    </div>
+                    <div className='spotInfoBottom' style={{ fontWeight: '300', fontSize: '10pt' }}>
+                        {`$${selectedMarker.price.toLocaleString()} night`}
+                    </div>
+                </div>
+              </div>
+            </InfoWindow>
+          )}
         </GoogleMap>
       )}
     </div>
